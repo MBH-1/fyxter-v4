@@ -1,0 +1,38 @@
+[build]
+  functions = "dist/netlify/functions"
+  publish = "dist"
+  command = "npm run build"
+
+[functions]
+  directory = "dist/netlify/functions"
+  node_bundler = "esbuild"
+
+[dev]
+  functions = "netlify/functions"
+  publish = "dist"
+  framework = "vite"
+  targetPort = 5173
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# Function API routes
+[[redirects]]
+  from = "/api/create-payment-intent"
+  to = "/.netlify/functions/create-payment-intent"
+  status = 200
+
+[[redirects]]
+  from = "/api/create-checkout"
+  to = "/.netlify/functions/create-checkout"
+  status = 200
+
+# CORS headers
+[[headers]]
+  for = "/.netlify/functions/*"
+  [headers.values]
+    Access-Control-Allow-Origin = "*"
+    Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"
+    Access-Control-Allow-Headers = "Origin, X-Requested-With, Content-Type, Accept"
