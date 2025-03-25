@@ -13,27 +13,29 @@
   framework = "vite"
   targetPort = 5173
 
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
-
-# Function API routes
-[[redirects]]
-  from = "/api/create-payment-intent"
-  to = "/.netlify/functions/create-payment-intent"
-  status = 200
-
+# ✅ FIRST: API routes
 [[redirects]]
   from = "/api/create-checkout"
   to = "/.netlify/functions/create-checkout"
   status = 200
 
-# CORS headers
+[[redirects]]
+  from = "/api/create-payment-intent"
+  to = "/.netlify/functions/create-payment-intent"
+  status = 200
+
+# ✅ THEN: SPA fallback
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+# ✅ CORS Headers
 [[headers]]
   for = "/.netlify/functions/*"
   [headers.values]
     Access-Control-Allow-Origin = "*"
     Access-Control-Allow-Methods = "GET, POST, PUT, DELETE, OPTIONS"
     Access-Control-Allow-Headers = "Origin, X-Requested-With, Content-Type, Accept"
+
     
