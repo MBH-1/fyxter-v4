@@ -14,6 +14,7 @@ import { WarrantyPolicy } from './pages/WarrantyPolicy';
 import { BlogPage } from './pages/BlogPage';
 import { ShippingPolicy } from './pages/ShippingPolicy';
 import { TestPage } from './pages/TestPage';
+import { RepairConfirmation } from './pages/RepairConfirmation';
 import { supabase } from './lib/supabase';
 
 // Technician-only route component
@@ -81,6 +82,7 @@ function App() {
       <Route path="/blog" element={<BlogPage />} />
       <Route path="/shipping" element={<ShippingPolicy />} />
       <Route path="/test" element={<TestPage />} />
+      <Route path="/repair-confirmation" element={<RepairConfirmation />} />
       <Route path="/dashboard" element={
         <TechnicianRoute>
           <UserDashboard />
