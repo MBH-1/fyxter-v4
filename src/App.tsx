@@ -82,7 +82,7 @@ function App() {
       <Route path="/blog" element={<BlogPage />} />
       <Route path="/shipping" element={<ShippingPolicy />} />
       <Route path="/test" element={<TestPage />} />
-      <Route path="/repair-confirmation" element={<RepairConfirmation />} />
+      <Route path="/repair-confirmation" element={<Layout><RepairConfirmation /></Layout>} />
       <Route path="/dashboard" element={
         <TechnicianRoute>
           <UserDashboard />
