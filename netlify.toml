@@ -24,6 +24,11 @@
   to = "/.netlify/functions/create-payment-intent"
   status = 200
 
+[[redirects]]
+  from = "/api/send-confirmation-email"
+  to = "/.netlify/functions/send-confirmation-email"
+  status = 200
+
 # ✅ THEN: SPA fallback
 [[redirects]]
   from = "/*"
