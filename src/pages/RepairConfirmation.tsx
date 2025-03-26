@@ -56,6 +56,25 @@ export function RepairConfirmation() {
       customerName: customerInfo.name,
       ...details,
     });
+   // Send confirmation email
+fetch('/api/send-confirmation-email', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({
+    to: customerInfo.email,
+    subject: `Fyxters Repair Confirmed: ${details.deviceModel}`,
+    message: `
+      <h2>Thank you, ${customerInfo.name}!</h2>
+      <p>Your ${details.deviceModel.replace(/_/g, ' ')} - ${details.repairType} request has been received.</p>
+      <p>We’ll contact you shortly. If you need support, reply to this email or call us at (123) 456-7890.</p>
+    `.trim(), // Optional: trims leading/trailing whitespace
+  }),
+})
+  .then((res) => res.json())
+  .then((data) => console.log('Email sent:', data))
+  .catch((err) => console.error('Email error:', err));
     
     setLoading(false);
   }, [sessionId]);
