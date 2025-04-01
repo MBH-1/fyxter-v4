@@ -1,10 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { supabase } from '../lib/supabase';
 import { DevicePrice, Location, RepairOption } from '../lib/types';
 import { loader, getCurrentLocation, calculateRoute, getTechnicianInfo } from '../lib/maps';
 import { RepairOptions } from '../components/RepairOptions';
 import { CustomerInfoForm } from '../components/CustomerInfoForm';
 import { PaymentConfirmation } from '../components/PaymentConfirmation';
+import { useLocation } from 'react-router-dom';
 import { Phone as PhoneIcon, MapPin, Clock, User, SearchIcon, AlertCircle } from 'lucide-react';
 
 export function HomePage() {
@@ -31,6 +32,17 @@ export function HomePage() {
   } | null>(null);
   const [orderComplete, setOrderComplete] = useState(false);
   const [mapLoaded, setMapLoaded] = useState(false);
+  const technicianSectionRef = useRef<HTMLDivElement>(null);
+  const location = useLocation();
+
+  useEffect(() => {
+    if (location.hash === "#select-device") {
+      const element = document.getElementById("select-device");
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  }, [location]);
 
   useEffect(() => {
     fetchDevicePrices();
@@ -301,6 +313,7 @@ export function HomePage() {
     setSelectedDevice(device);
     setSelectedOption(null);
     setShowDiagnosticCard(false);
+    technicianSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
 
   const handleRepairOptionSelect = (option: 'original' | 'aftermarket' | 'onsite' | 'diagnostic') => {
@@ -430,7 +443,7 @@ export function HomePage() {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {/* Device Selection */}
             <div className="space-y-6">
-              <div className="bg-white p-6 rounded-lg shadow-sm">
+            <div id="select-device" className="bg-white p-6 rounded-lg shadow-sm">
                 <h2 className="text-xl font-semibold mb-6">Select Your Device</h2>
                 
                 <div className="space-y-4">
@@ -514,7 +527,7 @@ export function HomePage() {
             </div>
 
             {/* Map */}
-            <div className="bg-white rounded-lg shadow-sm overflow-hidden">
+            <div ref={technicianSectionRef} className="bg-white rounded-lg shadow-sm overflow-hidden">
               <div className="p-6">
                 <h2 className="text-xl font-semibold mb-4">Nearest Available Technician</h2>
                 {locationLoading ? (

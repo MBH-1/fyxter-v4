@@ -129,16 +129,29 @@ export function Layout({ children }: LayoutProps) {
           />
         </div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full">
-          <div className="flex items-center h-[400px] md:h-[500px]">
-            <div className="max-w-md bg-black bg-opacity-15 p-5 rounded-lg backdrop-blur-sm">
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
-                Fyxters – The Heroes of Repairs
-              </h1>
-              <p className="text-lg md:text-xl text-gray-100">
-                Expert technicians near your location or on-site provide hassle-free repairs at the best price in the market. Get your device fixed today!
-              </p>
-            </div>
-          </div>
+        <div className="flex items-center h-[400px] md:h-[500px]">
+        <div className="max-w-md bg-black bg-opacity-15 p-5 rounded-lg backdrop-blur-sm">
+        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
+      Fyxters – The Heroes of Repairs
+        </h1>
+        <p className="text-lg md:text-xl text-gray-100">
+      <strong>Repair Your Device in 3 Easy Steps</strong><br />
+      1. Choose Your Device<br />
+      2. Share Your Location<br />
+      3. Get Instant Pricing & Repair
+    </p><button
+  onClick={() => {
+    const section = document.getElementById('select-device');
+    section?.scrollIntoView({ behavior: 'smooth' });
+  }}
+  className="mt-6 bg-black text-white px-5 py-3 rounded-lg hover:bg-gray-800 transition-colors"
+>
+  Start Repair
+</button>
+
+  </div>
+</div>
+
         </div>
       </div>
 

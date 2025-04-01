@@ -127,6 +127,7 @@ export function RepairOptions({ devicePrice, onOptionSelect, technicianInfo }: R
       <h2 className="text-2xl font-semibold">Choose Your Repair Option</h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Original Screen */}
+        {getPrice(devicePrice.original_part, originalExtended) > 0 && (
         <div className="bg-white p-6 rounded-lg shadow-lg border hover:border-black transition-all">
           <div className="flex justify-between items-start mb-4">
             <div>
@@ -203,8 +204,9 @@ export function RepairOptions({ devicePrice, onOptionSelect, technicianInfo }: R
             Choose This Option
           </button>
         </div>
-
+)}
         {/* Aftermarket Screen */}
+        {getPrice(devicePrice.aftermarket_part, aftermarketExtended) > 0 && (
         <div className="bg-white p-6 rounded-lg shadow-lg border hover:border-black transition-all">
           <div className="flex justify-between items-start mb-4">
             <div>
@@ -241,7 +243,7 @@ export function RepairOptions({ devicePrice, onOptionSelect, technicianInfo }: R
               </li>
             </ul>
           </div>
-
+          
           <div className="text-center mb-6">
             <div className="text-3xl font-bold">
               ${getPrice(devicePrice.aftermarket_part, aftermarketExtended)}
@@ -281,8 +283,10 @@ export function RepairOptions({ devicePrice, onOptionSelect, technicianInfo }: R
             Choose This Option
           </button>
         </div>
+        )}
 
         {/* On-Site Repair */}
+        {getPrice(baseOnsitePrice, onsiteExtended) > 0 && (
         <div className="bg-white p-6 rounded-lg shadow-lg border hover:border-black transition-all">
           <div className="flex justify-between items-start mb-4">
             <div>
@@ -359,10 +363,10 @@ export function RepairOptions({ devicePrice, onOptionSelect, technicianInfo }: R
             Choose This Option
           </button>
         </div>
+       )}
       </div>
-
       {/* New Protection and Charging Cable Card */}
-      <div className="bg-gradient-to-r from-emerald-500 to-teal-600 rounded-lg shadow-lg p-6 mt-8">
+      <div className="bg-gradient-to-r from-emerald-500 to-teal-600 rounded-lg shadow-lg p-6 mt-8 transition-transform duration-500 hover:scale-105">
         <div className="flex flex-col md:flex-row items-center justify-between">
           <div className="flex-1 text-white mb-6 md:mb-0 md:mr-8">
             <div className="flex items-center mb-3">
@@ -389,6 +393,84 @@ export function RepairOptions({ devicePrice, onOptionSelect, technicianInfo }: R
             <div className="inline-flex items-center px-3 py-1 bg-emerald-100 text-emerald-800 rounded-full text-sm font-medium">
               <Gift className="w-4 h-4 mr-1" />
               Included Free
+            </div>
+          </div>
+        </div>
+      </div>
+  {/* Testimonials Section */}
+  <div className="mt-10">
+        <h2 className="text-2xl font-semibold text-center mb-6">What Our Customers Say</h2>
+        <div className="flex space-x-6 overflow-x-auto pb-4 snap-x snap-mandatory">
+          {/* Testimonial 1 */}
+          <div className="bg-white p-6 rounded-lg shadow-md text-center flex-shrink-0 min-w-[280px] sm:w-80 snap-start transition-transform duration-500 hover:scale-105">
+            <img
+              src="https://res.cloudinary.com/dqwxexsra/image/upload/v1743545535/Screenshot_20250401_181011_WhatsAppBusiness_lxtun1.jpg"
+              alt="Customer 1"
+              className="w-20 h-20 rounded-full mx-auto mb-4"
+            />
+            <p className="font-semibold">Abdel</p>
+            <p className="text-gray-600 italic mb-4">
+              “Was Really quick, Service and Price exceeded my expectations.”
+            </p>
+            <div className="flex justify-center">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <svg
+                  key={i}
+                  className="w-5 h-5 text-yellow-400"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.285 3.967a1 1 0 00.95.69h4.168c.969 0 1.372 1.24.588 1.81l-3.37 2.449a1 1 0 00-.364 1.118l1.285 3.966c.3.922-.755 1.688-1.54 1.118l-3.37-2.448a1 1 0 00-1.176 0l-3.37 2.448c-.784.57-1.84-.196-1.54-1.118l1.285-3.966a1 1 0 00-.364-1.118l-3.37-2.449c-.784-.57-.38-1.81.589-1.81h4.168a1 1 0 00.95-.69l1.285-3.967z" />
+                </svg>
+              ))}
+            </div>
+          </div>
+          {/* Testimonial 2 */}
+          <div className="bg-white p-6 rounded-lg shadow-md text-center flex-shrink-0 min-w-[280px] sm:w-80 snap-start transition-transform duration-500 hover:scale-105">
+            <img
+              src="https://via.placeholder.com/80"
+              alt="Customer 2"
+              className="w-20 h-20 rounded-full mx-auto mb-4"
+            />
+            <p className="font-semibold">Jane Smith</p>
+            <p className="text-gray-600 italic mb-4">
+              “Easy to use, great results. Would recommend!”
+            </p>
+            <div className="flex justify-center">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <svg
+                  key={i}
+                  className="w-5 h-5 text-yellow-400"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.285 3.967a1 1 0 00.95.69h4.168c.969 0 1.372 1.24.588 1.81l-3.37 2.449a1 1 0 00-.364 1.118l1.285 3.966c.3.922-.755 1.688-1.54 1.118l-3.37-2.448a1 1 0 00-1.176 0l-3.37 2.448c-.784.57-1.84-.196-1.54-1.118l1.285-3.966a1 1 0 00-.364-1.118l-3.37-2.449c-.784-.57-.38-1.81.589-1.81h4.168a1 1 0 00.95-.69l1.285-3.967z" />
+                </svg>
+              ))}
+            </div>
+          </div>
+          {/* Testimonial 3 */}
+          <div className="bg-white p-6 rounded-lg shadow-md text-center flex-shrink-0 min-w-[280px] sm:w-80 snap-start transition-transform duration-500 hover:scale-105">
+            <img
+              src="https://via.placeholder.com/80"
+              alt="Customer 3"
+              className="w-20 h-20 rounded-full mx-auto mb-4"
+            />
+            <p className="font-semibold">Alex Johnson</p>
+            <p className="text-gray-600 italic mb-4">
+              “Helped me solve my problem quickly and easily!”
+            </p>
+            <div className="flex justify-center">
+              {Array.from({ length: 5 }).map((_, i) => (
+                <svg
+                  key={i}
+                  className="w-5 h-5 text-yellow-400"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.285 3.967a1 1 0 00.95.69h4.168c.969 0 1.372 1.24.588 1.81l-3.37 2.449a1 1 0 00-.364 1.118l1.285 3.966c.3.922-.755 1.688-1.54 1.118l-3.37-2.448a1 1 0 00-1.176 0l-3.37 2.448c-.784.57-1.84-.196-1.54-1.118l1.285-3.966a1 1 0 00-.364-1.118l-3.37-2.449c-.784-.57-.38-1.81.589-1.81h4.168a1 1 0 00.95-.69l1.285-3.967z" />
+                </svg>
+              ))}
             </div>
           </div>
         </div>
