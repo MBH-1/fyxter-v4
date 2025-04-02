@@ -154,6 +154,7 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
       const requestBody = {
         amount: Math.round(finalPrice * 100), // Convert to cents
         currency: 'usd',
+        capture_method: 'manual',
         repair_details: {
           user_id: 'anonymous',
           model: deviceModel,
