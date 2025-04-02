@@ -62,16 +62,16 @@ const CheckoutForm: React.FC<CheckoutFormProps> = ({
     }
   };
 
-  useEffect(() => {
-    // Create a checkout session as soon as the page loads
-    const createCheckoutSession = async () => {
-      const finalPrice = isCouponApplied ? price - appliedDiscount : price;
-      if (finalPrice > 0) {
-        await createStripeCheckoutSession(finalPrice);
-      }
-    };
-    createCheckoutSession();
-  }, [isCouponApplied, appliedDiscount, price]);
+  // useEffect(() => {
+  //   // Create a checkout session as soon as the page loads
+  //   const createCheckoutSession = async () => {
+  //     const finalPrice = isCouponApplied ? price - appliedDiscount : price;
+  //     if (finalPrice > 0) {
+  //       await createStripeCheckoutSession(finalPrice);
+  //     }
+  //   };
+  //   createCheckoutSession();
+  // }, [isCouponApplied, appliedDiscount, price]);
 
   const createStripeCheckoutSession = async (finalPrice: number) => {
     if (!finalPrice || finalPrice <= 0) return;

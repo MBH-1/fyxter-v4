@@ -126,7 +126,7 @@ export function RepairOptions({ devicePrice, onOptionSelect, technicianInfo }: R
   return (
     <div className="space-y-6">
        {/* New Protection and Charging Cable Card */}
-       <div className="bg-gradient-to-r from-emerald-500 to-teal-600 rounded-lg shadow-lg p-6 mt-8 transition-transform duration-500 hover:scale-105">
+      <div className="bg-gradient-to-r from-emerald-500 to-teal-600 rounded-lg shadow-lg p-6 mt-8 transition-transform duration-500 hover:scale-105">
         <div className="flex flex-col md:flex-row items-center justify-between">
           <div className="flex-1 text-white mb-6 md:mb-0 md:mr-8">
             <div className="flex items-center mb-3">
