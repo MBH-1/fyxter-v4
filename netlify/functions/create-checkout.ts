@@ -75,6 +75,9 @@ export const handler: Handler = async (event) => {
       mode: 'payment',
       ui_mode: 'embedded', // This enables embedded checkout
       return_url: `${process.env.URL || 'http://localhost:8888'}/repair-confirmation?session_id={CHECKOUT_SESSION_ID}`,
+      payment_intent_data: {
+        capture_method: 'manual', // This tells Stripe to authorize only
+      },
       line_items: [
         {
           price_data: {
