@@ -6,7 +6,9 @@ import { RepairOptions } from '../components/RepairOptions';
 import { CustomerInfoForm } from '../components/CustomerInfoForm';
 import { PaymentConfirmation } from '../components/PaymentConfirmation';
 import { useLocation } from 'react-router-dom';
-import { Phone as PhoneIcon, MapPin, Clock, User, SearchIcon, AlertCircle } from 'lucide-react';
+import { Phone as PhoneIcon, MapPin, Clock, User, Shield, PenTool as Tool, Ticket, SearchIcon, AlertCircle } from 'lucide-react';
+import { CreditCard } from "lucide-react";
+
 
 export function HomePage() {
   const [devicePrices, setDevicePrices] = useState<DevicePrice[]>([]);
@@ -594,7 +596,53 @@ export function HomePage() {
               />
             </div>
           )}
+        {/* Secure Payment & Offers Card */}
+ <div className="bg-gradient-to-r from-purple-600 to-indigo-600 rounded-lg shadow-lg p-6 mt-8 transition-transform duration-500 hover:scale-105">
+      <div className="flex flex-col md:flex-row items-center justify-between">
+        <div className="flex-1 text-white mb-6 md:mb-0 md:mr-8">
+          <div className="flex items-center mb-3">
+            <CreditCard className="w-6 h-6 mr-2" />
+            <h3 className="text-xl font-semibold">Secure Payment & Exclusive Offers</h3>
+          </div>
+          <p className="text-purple-50 mb-4">
+            Payment is authorized only after the repair is done. We use Stripe for a safe, hassle-free experience.
+          </p>
+          <ul className="space-y-3">
+            <li className="flex items-center">
+              <Shield className="w-5 h-5 mr-2 text-purple-200" />
+              <span>Repair Guarantee-Your Happiness Is Our Priority.</span>
+            </li>
+            <li className="flex items-center">
+              <Tool className="w-5 h-5 mr-2 text-purple-200" />
+              <span>Top-quality replacement parts</span>
+            </li>
+            <li className="flex items-center">
+              <Ticket className="w-5 h-5 mr-2 text-purple-200" />
+              <span> Student Discount (valid ID required)</span>
+            </li>
+            <li className="flex items-center">
+              <CreditCard className="w-5 h-5 mr-2 text-purple-200" />
+              <span>Stripe-secured transactions</span>
+            </li>
+          </ul>
         </div>
+        <div className="text-center bg-white bg-opacity-10 rounded-lg p-4 md:p-6">
+          <div className="text-2xl font-bold text-white mb-1">Payment After Repair</div>
+          <div className="text-purple-100 text-sm mb-3">Safe, Transparent & Guaranteed</div>
+          <button   onClick={() => {
+      const section = document.getElementById('select-device');
+      section?.scrollIntoView({ behavior: 'smooth' });
+    }} className="inline-flex items-center px-4 py-2 bg-purple-100 text-purple-800 rounded-full text-sm font-medium hover:bg-purple-200 transition-colors">
+            <Tool className="w-4 h-4 mr-1" />
+            Start Repair
+          </button>
+        </div>
+      </div>
+    </div>
+      
+        </div>
+
+        
       )}
     </main>
   );

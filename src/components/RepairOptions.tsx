@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Clock, Shield, MapPin, PenTool as Tool, Check, Gift, Cable, Search, Ticket } from 'lucide-react';
 import { DevicePrice } from '../lib/types';
+import { CreditCard } from "lucide-react";
 
 interface RepairOptionsProps {
   devicePrice: DevicePrice;
@@ -124,6 +125,39 @@ export function RepairOptions({ devicePrice, onOptionSelect, technicianInfo }: R
   // Regular repair options
   return (
     <div className="space-y-6">
+       {/* New Protection and Charging Cable Card */}
+       <div className="bg-gradient-to-r from-emerald-500 to-teal-600 rounded-lg shadow-lg p-6 mt-8 transition-transform duration-500 hover:scale-105">
+        <div className="flex flex-col md:flex-row items-center justify-between">
+          <div className="flex-1 text-white mb-6 md:mb-0 md:mr-8">
+            <div className="flex items-center mb-3">
+              <Gift className="w-6 h-6 mr-2" />
+              <h3 className="text-xl font-semibold">Free Bonus with Every Repair!</h3>
+            </div>
+            <p className="text-emerald-50 mb-4">
+              We go above and beyond to ensure your device stays protected and charged.
+            </p>
+            <ul className="space-y-3">
+              <li className="flex items-center">
+                <Shield className="w-5 h-5 mr-2 text-emerald-200" />
+                <span>Free screen protector ($19.99 value)</span>
+              </li>
+              <li className="flex items-center">
+                <Cable className="w-5 h-5 mr-2 text-emerald-200" />
+                <span>Complimentary charging cable ($14.99 value)</span>
+              </li>
+            </ul>
+          </div>
+          <div className="text-center bg-white bg-opacity-10 rounded-lg p-4 md:p-6">
+            <div className="text-3xl font-bold text-white mb-1">$34.98</div>
+            <div className="text-emerald-100 text-sm mb-3">Total Value</div>
+            <div className="inline-flex items-center px-3 py-1 bg-emerald-100 text-emerald-800 rounded-full text-sm font-medium">
+              <Gift className="w-4 h-4 mr-1" />
+              Included Free
+            </div>
+          </div>
+        </div>
+      </div>
+     
       <h2 className="text-2xl font-semibold">Choose Your Repair Option</h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {/* Original Screen */}
@@ -365,39 +399,8 @@ export function RepairOptions({ devicePrice, onOptionSelect, technicianInfo }: R
         </div>
        )}
       </div>
-      {/* New Protection and Charging Cable Card */}
-      <div className="bg-gradient-to-r from-emerald-500 to-teal-600 rounded-lg shadow-lg p-6 mt-8 transition-transform duration-500 hover:scale-105">
-        <div className="flex flex-col md:flex-row items-center justify-between">
-          <div className="flex-1 text-white mb-6 md:mb-0 md:mr-8">
-            <div className="flex items-center mb-3">
-              <Gift className="w-6 h-6 mr-2" />
-              <h3 className="text-xl font-semibold">Free Bonus with Every Repair!</h3>
-            </div>
-            <p className="text-emerald-50 mb-4">
-              We go above and beyond to ensure your device stays protected and charged.
-            </p>
-            <ul className="space-y-3">
-              <li className="flex items-center">
-                <Shield className="w-5 h-5 mr-2 text-emerald-200" />
-                <span>Free screen protector ($19.99 value)</span>
-              </li>
-              <li className="flex items-center">
-                <Cable className="w-5 h-5 mr-2 text-emerald-200" />
-                <span>Complimentary charging cable ($14.99 value)</span>
-              </li>
-            </ul>
-          </div>
-          <div className="text-center bg-white bg-opacity-10 rounded-lg p-4 md:p-6">
-            <div className="text-3xl font-bold text-white mb-1">$34.98</div>
-            <div className="text-emerald-100 text-sm mb-3">Total Value</div>
-            <div className="inline-flex items-center px-3 py-1 bg-emerald-100 text-emerald-800 rounded-full text-sm font-medium">
-              <Gift className="w-4 h-4 mr-1" />
-              Included Free
-            </div>
-          </div>
-        </div>
-      </div>
-  {/* Testimonials Section */}
+
+{/* Testimonials Section */}
   <div className="mt-10">
         <h2 className="text-2xl font-semibold text-center mb-6">What Our Customers Say</h2>
         <div className="flex space-x-6 overflow-x-auto pb-4 snap-x snap-mandatory">
@@ -470,6 +473,7 @@ export function RepairOptions({ devicePrice, onOptionSelect, technicianInfo }: R
                 >
                   <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.285 3.967a1 1 0 00.95.69h4.168c.969 0 1.372 1.24.588 1.81l-3.37 2.449a1 1 0 00-.364 1.118l1.285 3.966c.3.922-.755 1.688-1.54 1.118l-3.37-2.448a1 1 0 00-1.176 0l-3.37 2.448c-.784.57-1.84-.196-1.54-1.118l1.285-3.966a1 1 0 00-.364-1.118l-3.37-2.449c-.784-.57-.38-1.81.589-1.81h4.168a1 1 0 00.95-.69l1.285-3.967z" />
                 </svg>
+                
               ))}
             </div>
           </div>
