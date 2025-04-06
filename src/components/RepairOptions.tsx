@@ -148,7 +148,7 @@ export function RepairOptions({ devicePrice, onOptionSelect, technicianInfo }: R
             </ul>
           </div>
           <div className="text-center bg-white bg-opacity-10 rounded-lg p-4 md:p-6">
-            <div className="text-3xl font-bold text-white mb-1">$34.98</div>
+            <div className="text-3xl font-bold text-white mb-1">$35</div>
             <div className="text-emerald-100 text-sm mb-3">Total Value</div>
             <div className="inline-flex items-center px-3 py-1 bg-emerald-100 text-emerald-800 rounded-full text-sm font-medium">
               <Gift className="w-4 h-4 mr-1" />
@@ -213,7 +213,7 @@ export function RepairOptions({ devicePrice, onOptionSelect, technicianInfo }: R
             </div>
             <div className="flex items-center text-sm text-gray-600">
               <Shield className="w-4 h-4 mr-2" />
-              3 months Fyxters guarantee
+              6 months Fyxters guarantee
             </div>
             <div className="flex items-center text-sm text-gray-600">
               <MapPin className="w-4 h-4 mr-2" />
@@ -292,7 +292,7 @@ export function RepairOptions({ devicePrice, onOptionSelect, technicianInfo }: R
             </div>
             <div className="flex items-center text-sm text-gray-600">
               <Shield className="w-4 h-4 mr-2" />
-              3 months Fyxters guarantee
+              6 months Fyxters guarantee
             </div>
             <div className="flex items-center text-sm text-gray-600">
               <MapPin className="w-4 h-4 mr-2" />
@@ -372,7 +372,7 @@ export function RepairOptions({ devicePrice, onOptionSelect, technicianInfo }: R
             </div>
             <div className="flex items-center text-sm text-gray-600">
               <Shield className="w-4 h-4 mr-2" />
-              3 months Fyxters guarantee
+              6 months Fyxters guarantee
             </div>
             <div className="flex items-center text-sm text-gray-600">
               <MapPin className="w-4 h-4 mr-2" />

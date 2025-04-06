@@ -17,7 +17,7 @@ export function AboutUs() {
           <div className="text-center">
             <h1 className="text-4xl md:text-5xl font-bold mb-4">About Fyxters</h1>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              We're on a mission to revolutionize mobile device repair with speed, quality, and convenience.
+            Redefining repair—fast, reliable, and built for all Challenges
             </p>
           </div>
         </div>
@@ -29,17 +29,15 @@ export function AboutUs() {
           <div>
             <h2 className="text-3xl font-bold mb-6">Our Story</h2>
             <p className="text-gray-600 mb-4">
-              Fyxters was founded in 2022 by a team of tech enthusiasts who were frustrated with the traditional device repair experience. 
-              Long waiting times, inconsistent quality, and lack of transparency were common issues that customers faced.
+            Fyxters was founded because we were frustrated with the traditional device repair experience.
+            Long waiting times, inconsistent quality, and a lack of transparency left customers feeling let down and underserved.
             </p>
             <p className="text-gray-600 mb-4">
-              We set out to create a better solution—one that combines expert technicians, premium parts, and outstanding customer service. 
-              Our vision was to make quality device repair accessible to everyone, whether at their home, office, or our service centers.
+            We knew there had to be a better way. Drawing on our extensive experience in parts wholesale, we built a team of expert technicians who could deliver reliable, efficient, and honest repair services
+            Our goal was to become the trusted name for all your daily repair needs—your heroes in a world where nothing should slow you down.
             </p>
             <p className="text-gray-600">
-              Today, Fyxters has grown into a network of certified technicians across major cities, ready to provide fast, reliable 
-              repairs for all your devices. We've helped thousands of customers get their devices back in working order, often within 
-              the same day.
+            Our vision goes beyond just fixing devices. By leveraging our expertise and commitment to excellence, we aim to broaden our services to tackle everyday repair challenges and help make the world greener—reducing waste and promoting a more sustainable future for everyone.
             </p>
           </div>
           <div className="bg-gradient-to-r from-blue-500 to-purple-500 p-8 rounded-lg text-white">
@@ -56,7 +54,7 @@ export function AboutUs() {
                 <Shield className="w-6 h-6 mr-3 mt-1" />
                 <div>
                   <h4 className="font-semibold mb-1">Quality Guarantee</h4>
-                  <p>We stand behind our work with a 3-month warranty on all repairs.</p>
+                  <p>We stand behind our work with a 6-month warranty on all repairs.</p>
                 </div>
               </div>
               <div className="flex items-start">
@@ -78,44 +76,7 @@ export function AboutUs() {
         </div>
       </div>
 
-      {/* Meet the Team */}
-      <div className="bg-gray-100 py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-bold mb-12 text-center">Our Leadership Team</h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <div className="w-24 h-24 bg-gradient-to-r from-blue-400 to-indigo-500 rounded-full flex items-center justify-center mx-auto mb-4 text-white text-2xl font-bold">
-                BM
-              </div>
-              <h3 className="text-xl font-bold text-center">Benhamza Mouline</h3>
-              <p className="text-gray-500 text-center mb-4">Founder & CEO</p>
-              <p className="text-gray-600 text-center">
-                International business expert with experience in phone parts wholesale.
-              </p>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <div className="w-24 h-24 bg-gradient-to-r from-purple-400 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-4 text-white text-2xl font-bold">
-                SP
-              </div>
-              <h3 className="text-xl font-bold text-center">Sarah Park</h3>
-              <p className="text-gray-500 text-center mb-4">CTO</p>
-              <p className="text-gray-600 text-center">
-                Electronics engineer with expertise in developing innovative repair techniques and quality control.
-              </p>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <div className="w-24 h-24 bg-gradient-to-r from-green-400 to-teal-500 rounded-full flex items-center justify-center mx-auto mb-4 text-white text-2xl font-bold">
-                MR
-              </div>
-              <h3 className="text-xl font-bold text-center">Michael Rodriguez</h3>
-              <p className="text-gray-500 text-center mb-4">Head of Operations</p>
-              <p className="text-gray-600 text-center">
-                Logistics expert focused on creating efficient processes to ensure quick, reliable service.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
+      
 
       {/* Contact CTA */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">

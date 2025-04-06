@@ -6,7 +6,7 @@ import { RepairOptions } from '../components/RepairOptions';
 import { CustomerInfoForm } from '../components/CustomerInfoForm';
 import { PaymentConfirmation } from '../components/PaymentConfirmation';
 import { useLocation } from 'react-router-dom';
-import { Phone as PhoneIcon, MapPin, Clock, User, Shield, PenTool as Tool, Ticket, SearchIcon, AlertCircle } from 'lucide-react';
+import { Phone as PhoneIcon, MapPin, Clock, User, Shield, PenTool as Tool, Ticket, SearchIcon, AlertCircle , Check } from 'lucide-react';
 import { CreditCard } from "lucide-react";
 
 
@@ -15,6 +15,14 @@ export function HomePage() {
   const [userLocation, setUserLocation] = useState<Location | null>(null);
   const [loading, setLoading] = useState(true);
   const [selectedBrand, setSelectedBrand] = useState<string>('Iphone');
+  const [selectedRepairIssue, setSelectedRepairIssue] = useState<string | null>(null);
+
+const repairIssues = [
+  'Screen Replacement',
+  'Battery Replacement',
+  'Charging Port',
+  'Other'
+];
   const [selectedDevice, setSelectedDevice] = useState<DevicePrice | null>(null);
   const [selectedOption, setSelectedOption] = useState<'original' | 'aftermarket' | 'onsite' | 'diagnostic' | null>(null);
   const [showDiagnosticCard, setShowDiagnosticCard] = useState(false);
@@ -382,7 +390,7 @@ export function HomePage() {
   };
 
   const handleCallSupport = () => {
-    window.location.href = 'tel:+15145550123';
+    window.location.href = 'tel:+15148652788';
   };
 
   return (
@@ -494,6 +502,31 @@ export function HomePage() {
                   )}
                 </div>
               </div>
+              {selectedDevice && (
+  <div className="bg-white p-6 rounded-lg shadow-sm mt-8">
+    <h2 className="text-xl font-semibold mb-4">What needs to be fixed?</h2>
+    <div className="grid grid-cols-2 gap-2">
+      {repairIssues.map((issue) => (
+        <div key={issue} className="relative">
+          {issue === 'Screen Replacement' ? (
+            <button
+              onClick={() => setSelectedRepairIssue(issue)}
+              className="p-3 text-center border rounded-lg transition-colors hover:border-black"
+            >
+              {issue}
+            </button>
+          ) : (
+            <div className="p-3 text-center border rounded-lg bg-gray-100 opacity-50 flex flex-col items-center justify-center">
+              <span>{issue}</span>
+              <span className="text-xs mt-1">(Call Us For a Quote)</span>
+            </div>
+          )}
+        </div>
+      ))}
+    </div>
+  </div>
+)}
+
 
               {/* Can't Find Your Device Section */}
               <div className="bg-gradient-to-r from-purple-600 to-indigo-600 p-6 rounded-lg shadow-sm text-white">
@@ -513,7 +546,7 @@ export function HomePage() {
                       className="flex-1 inline-flex items-center justify-center px-4 py-3 bg-white text-purple-600 rounded-lg font-medium hover:bg-purple-50 transition-colors"
                     >
                       <PhoneIcon className="w-5 h-5 mr-2" />
-                      Call (514) 555-0123
+                      Call (514) 865-2788
                     </button>
                     
                     <button

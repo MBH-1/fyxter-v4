@@ -144,18 +144,18 @@ export function FAQPage() {
               </p>
               <div className="grid md:grid-cols-2 gap-4">
                 <a 
-                  href="tel:+15145550123" 
+                  href="tel:+15148652788" 
                   className="flex items-center justify-center p-4 bg-white rounded-lg border hover:border-blue-500 transition-colors"
                 >
                   <PhoneIcon className="w-5 h-5 mr-2 text-blue-600" />
-                  <span>Call (123) 456-7890</span>
+                  <span>Call (514) 865-2788</span>
                 </a>
                 <a 
-                  href="mailto:support@fyxters.com" 
+                  href="mailto:info@fyxters.com" 
                   className="flex items-center justify-center p-4 bg-white rounded-lg border hover:border-blue-500 transition-colors"
                 >
                   <Mail className="w-5 h-5 mr-2 text-blue-600" />
-                  <span>support@fyxters.com</span>
+                  <span>info@fyxters.com</span>
                 </a>
               </div>
             </div>

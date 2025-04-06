@@ -49,9 +49,7 @@ export function Footer() {
               <li>
                 <Link to="/blog" className="hover:text-white transition-colors">Blog</Link>
               </li>
-              <li>
-                <Link to="/contact" className="hover:text-white transition-colors">Contact Us</Link>
-              </li>
+              
             </ul>
           </div>
 
@@ -84,13 +82,13 @@ export function Footer() {
               <li className="flex items-center gap-2">
                 <Phone size={16} />
                 <a href="tel:+1234567890" className="hover:text-white transition-colors">
-                  (123) 456-7890
+                  (514) 865-2788
                 </a>
               </li>
               <li className="flex items-center gap-2">
                 <Mail size={16} />
                 <a href="mailto:support@fyxters.com" className="hover:text-white transition-colors">
-                  support@fyxters.com
+                  info@fyxters.com
                 </a>
               </li>
             </ul>

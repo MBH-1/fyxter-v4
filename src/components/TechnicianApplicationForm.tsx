@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { supabase } from '../lib/supabase';
-import { PenTool as Tool, MapPin, Phone, Mail, User, Briefcase, Star, Shield } from 'lucide-react';
+import { PenTool as Tool, MapPin, Phone, Mail, User, Briefcase, Star, Shield, check } from 'lucide-react';
 
 export function TechnicianApplicationForm() {
   const [formData, setFormData] = useState({

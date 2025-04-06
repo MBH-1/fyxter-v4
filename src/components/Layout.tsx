@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { FyxtersLogo } from './FyxtersLogo';
 import { Footer } from './Footer';
@@ -10,6 +10,7 @@ interface LayoutProps {
 
 export function Layout({ children }: LayoutProps) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (mobileMenuOpen) {
@@ -24,7 +25,7 @@ export function Layout({ children }: LayoutProps) {
 
   const handleLogoClick = (e: React.MouseEvent) => {
     e.preventDefault();
-    window.location.reload();
+    navigate("/");
   };
 
   return (
@@ -138,7 +139,8 @@ export function Layout({ children }: LayoutProps) {
       <strong>Repair Your Device in 3 Easy Steps</strong><br />
       1. Choose Your Device<br />
       2. Share Your Location<br />
-      3. Get Instant Pricing & Repair
+      3. Get Instant Pricing & Repair<br />
+      
     </p><button
   onClick={() => {
     const section = document.getElementById('select-device');
