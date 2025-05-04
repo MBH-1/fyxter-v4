@@ -399,86 +399,63 @@ export function RepairOptions({ devicePrice, onOptionSelect, technicianInfo }: R
         </div>
        )}
       </div>
-
 {/* Testimonials Section */}
-  <div className="mt-10">
-        <h2 className="text-2xl font-semibold text-center mb-6">What Our Customers Say</h2>
-        <div className="flex space-x-6 overflow-x-auto pb-4 snap-x snap-mandatory">
-          {/* Testimonial 1 */}
-          <div className="bg-white p-6 rounded-lg shadow-md text-center flex-shrink-0 min-w-[280px] sm:w-80 snap-start transition-transform duration-500 hover:scale-105">
-            <img
-              src="https://res.cloudinary.com/dqwxexsra/image/upload/v1743545535/Screenshot_20250401_181011_WhatsAppBusiness_lxtun1.jpg"
-              alt="Customer 1"
-              className="w-20 h-20 rounded-full mx-auto mb-4"
-            />
-            <p className="font-semibold">Abdel</p>
-            <p className="text-gray-600 italic mb-4">
-              “Was Really quick, Service and Price exceeded my expectations.”
-            </p>
-            <div className="flex justify-center">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <svg
-                  key={i}
-                  className="w-5 h-5 text-yellow-400"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.285 3.967a1 1 0 00.95.69h4.168c.969 0 1.372 1.24.588 1.81l-3.37 2.449a1 1 0 00-.364 1.118l1.285 3.966c.3.922-.755 1.688-1.54 1.118l-3.37-2.448a1 1 0 00-1.176 0l-3.37 2.448c-.784.57-1.84-.196-1.54-1.118l1.285-3.966a1 1 0 00-.364-1.118l-3.37-2.449c-.784-.57-.38-1.81.589-1.81h4.168a1 1 0 00.95-.69l1.285-3.967z" />
-                </svg>
-              ))}
-            </div>
-          </div>
-          {/* Testimonial 2 */}
-          <div className="bg-white p-6 rounded-lg shadow-md text-center flex-shrink-0 min-w-[280px] sm:w-80 snap-start transition-transform duration-500 hover:scale-105">
-            <img
-              src="https://via.placeholder.com/80"
-              alt="Customer 2"
-              className="w-20 h-20 rounded-full mx-auto mb-4"
-            />
-            <p className="font-semibold">Jane Smith</p>
-            <p className="text-gray-600 italic mb-4">
-              “Easy to use, great results. Would recommend!”
-            </p>
-            <div className="flex justify-center">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <svg
-                  key={i}
-                  className="w-5 h-5 text-yellow-400"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.285 3.967a1 1 0 00.95.69h4.168c.969 0 1.372 1.24.588 1.81l-3.37 2.449a1 1 0 00-.364 1.118l1.285 3.966c.3.922-.755 1.688-1.54 1.118l-3.37-2.448a1 1 0 00-1.176 0l-3.37 2.448c-.784.57-1.84-.196-1.54-1.118l1.285-3.966a1 1 0 00-.364-1.118l-3.37-2.449c-.784-.57-.38-1.81.589-1.81h4.168a1 1 0 00.95-.69l1.285-3.967z" />
-                </svg>
-              ))}
-            </div>
-          </div>
-          {/* Testimonial 3 */}
-          <div className="bg-white p-6 rounded-lg shadow-md text-center flex-shrink-0 min-w-[280px] sm:w-80 snap-start transition-transform duration-500 hover:scale-105">
-            <img
-              src="https://via.placeholder.com/80"
-              alt="Customer 3"
-              className="w-20 h-20 rounded-full mx-auto mb-4"
-            />
-            <p className="font-semibold">Alex Johnson</p>
-            <p className="text-gray-600 italic mb-4">
-              “Helped me solve my problem quickly and easily!”
-            </p>
-            <div className="flex justify-center">
-              {Array.from({ length: 5 }).map((_, i) => (
-                <svg
-                  key={i}
-                  className="w-5 h-5 text-yellow-400"
-                  fill="currentColor"
-                  viewBox="0 0 20 20"
-                >
-                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.285 3.967a1 1 0 00.95.69h4.168c.969 0 1.372 1.24.588 1.81l-3.37 2.449a1 1 0 00-.364 1.118l1.285 3.966c.3.922-.755 1.688-1.54 1.118l-3.37-2.448a1 1 0 00-1.176 0l-3.37 2.448c-.784.57-1.84-.196-1.54-1.118l1.285-3.966a1 1 0 00-.364-1.118l-3.37-2.449c-.784-.57-.38-1.81.589-1.81h4.168a1 1 0 00.95-.69l1.285-3.967z" />
-                </svg>
-                
-              ))}
-            </div>
-          </div>
-        </div>
+<div className="mt-10">
+  <h2 className="text-2xl font-semibold text-center mb-6">What Our Customers Say</h2>
+  <div className="flex flex-col md:flex-row justify-center items-center gap-6">
+    {/* Testimonial 1 - Abdel */}
+    <div className="bg-white p-6 rounded-lg shadow-md text-center w-80 transition-transform duration-500 hover:scale-105">
+      <img
+        src="https://res.cloudinary.com/dqwxexsra/image/upload/v1743545535/Screenshot_20250401_181011_WhatsAppBusiness_lxtun1.jpg"
+        alt="Abdel"
+        className="w-20 h-20 rounded-full mx-auto mb-4"
+      />
+      <p className="font-semibold">Abdel</p>
+      <p className="text-gray-600 italic mb-4">
+        “Was Really quick, Service and Price exceeded my expectations.”
+      </p>
+      <div className="flex justify-center">
+        {Array.from({ length: 5 }).map((_, i) => (
+          <svg
+            key={i}
+            className="w-5 h-5 text-yellow-400"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
+            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.285 3.967a1 1 0 00.95.69h4.168c.969 0 1.372 1.24.588 1.81l-3.37 2.449a1 1 0 00-.364 1.118l1.285 3.966c.3.922-.755 1.688-1.54 1.118l-3.37-2.448a1 1 0 00-1.176 0l-3.37 2.448c-.784.57-1.84-.196-1.54-1.118l1.285-3.966a1 1 0 00-.364-1.118l-3.37-2.449c-.784-.57-.38-1.81.589-1.81h4.168a1 1 0 00.95-.69l1.285-3.967z" />
+          </svg>
+        ))}
       </div>
+    </div>
+
+    {/* Testimonial 2 - Angela */}
+    <div className="bg-white p-6 rounded-lg shadow-md text-center w-80 transition-transform duration-500 hover:scale-105">
+      <img
+        src="https://res.cloudinary.com/dqwxexsra/image/upload/v1746394331/IMG-20250504-WA0014_troch2.jpg"
+        alt="Angela"
+        className="w-20 h-20 rounded-full mx-auto mb-4"
+      />
+      <p className="font-semibold">Angela</p>
+      <p className="text-gray-600 italic mb-4">
+        “Excellent service! The technician was fast and very professional.”
+      </p>
+      <div className="flex justify-center">
+        {Array.from({ length: 5 }).map((_, i) => (
+          <svg
+            key={i}
+            className="w-5 h-5 text-yellow-400"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
+            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.285 3.967a1 1 0 00.95.69h4.168c.969 0 1.372 1.24.588 1.81l-3.37 2.449a1 1 0 00-.364 1.118l1.285 3.966c.3.922-.755 1.688-1.54 1.118l-3.37-2.448a1 1 0 00-1.176 0l-3.37 2.448c-.784.57-1.84-.196-1.54-1.118l1.285-3.966a1 1 0 00-.364-1.118l-3.37-2.449c-.784-.57-.38-1.81.589-1.81h4.168a1 1 0 00.95-.69l1.285-3.967z" />
+          </svg>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>
+
+
     </div>
   );
 }
