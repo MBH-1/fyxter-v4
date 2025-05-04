@@ -66,7 +66,7 @@ export const handler: Handler = async (event) => {
       };
     }
 
-    console.log(`Creating checkout session for ${price} USD`);
+    console.log(`Creating checkout session for ${price} CAD`);
     console.log('Repair details:', repair_details);
 
     // Create a Checkout Session for both standard redirect and embedded checkout
@@ -81,7 +81,7 @@ export const handler: Handler = async (event) => {
       line_items: [
         {
           price_data: {
-            currency: 'usd',
+            currency: 'cad',
             product_data: {
               name: `${repair_details.model} - ${repair_details.repair_type}`,
               description: `${repair_details.service_type} Service`,
