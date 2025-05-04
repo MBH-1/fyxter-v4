@@ -62,7 +62,9 @@ export const handler: Handler = async (event) => {
       };
     }
 
-    const { amount, currency = 'usd', repair_details } = parsedBody;
+  const { amount, repair_details } = parsedBody;
+  const currency = 'cad';
+
 
     if (!amount || !repair_details) {
       console.error('Missing required parameters:', { amount, repair_details });
@@ -83,7 +85,8 @@ export const handler: Handler = async (event) => {
       };
     }
 
-    console.log(`Creating payment intent for ${parsedAmount} cents (${parsedAmount / 100} ${currency})`);
+   console.log(`Creating payment intent for ${parsedAmount} cents (${parsedAmount / 100} CAD)`);
+
     console.log('Repair details:', JSON.stringify(repair_details));
 
     // Set a dummy success response for testing in case Stripe API isn't fully configured
