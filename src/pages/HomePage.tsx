@@ -677,7 +677,8 @@ const repairIssues = [
           <button   onClick={() => {
       const section = document.getElementById('select-device');
       section?.scrollIntoView({ behavior: 'smooth' });
-    }} className="inline-flex items-center px-4 py-2 bg-purple-100 text-purple-800 rounded-full text-sm font-medium hover:bg-purple-200 transition-colors">
+    }} 
+            className="inline-flex items-center px-4 py-2 bg-purple-100 text-purple-800 rounded-full text-sm font-medium hover:bg-purple-200 transition-colors">
             <Tool className="w-4 h-4 mr-1" />
             Start Repair
           </button>
