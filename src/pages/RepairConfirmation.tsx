@@ -68,7 +68,7 @@ fetch('/api/send-confirmation-email', {
     message: `
       <h2>Thank you, ${customerInfo.name}!</h2>
       <p>Your ${details.deviceModel.replace(/_/g, ' ')} - ${details.repairType} request has been received.</p>
-      <p>We’ll contact you shortly. If you need support, reply to this email or call us at (123) 456-7890.</p>
+      <p>We’ll contact you shortly. If you need support, reply to this email or call us at (514) 865-2788.</p>
     `.trim(), // Optional: trims leading/trailing whitespace
   }),
 })
