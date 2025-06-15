@@ -1,59 +1,37 @@
-import { Handler } from '@netlify/functions';
-
-const RESEND_API_KEY = process.env.RESEND_API_KEY!;
-const FROM_EMAIL = 'info@fyxters.com';
+import type { Handler } from '@netlify/functions';
+import nodemailer from 'nodemailer';
 
 const handler: Handler = async (event) => {
-  if (event.httpMethod !== 'POST') {
-    return {
-      statusCode: 405,
-      body: JSON.stringify({ error: 'Method not allowed' }),
-    };
-  }
+  const { name, email, phone, preferred_date, preferred_time } = JSON.parse(event.body || '{}');
 
-  try {
-    const { to, subject, message } = JSON.parse(event.body || '{}');
+  const transporter = nodemailer.createTransport({
+    host: 'smtp.gmail.com',
+    port: 465,
+    secure: true,
+    auth: {
+      user: process.env.MAIL_USER,
+      pass: process.env.MAIL_PASS,
+    },
+  });
 
-    if (!to || !subject || !message) {
-      return {
-        statusCode: 400,
-        body: JSON.stringify({ error: 'Missing fields' }),
-      };
-    }
+  await transporter.sendMail({
+    from: `"Fyxters Notifications" <${process.env.MAIL_USER}>`,
+    to: 'info@fyxters.com', // ✅ where you want to receive alerts
+    subject: 'New Repair Submission',
+    html: `
+      <h3>New Repair Info Submitted</h3>
+      <p><strong>Name:</strong> ${name}</p>
+      <p><strong>Email:</strong> ${email}</p>
+      <p><strong>Phone:</strong> ${phone}</p>
+      <p><strong>Date:</strong> ${preferred_date || 'ASAP'}</p>
+      <p><strong>Time:</strong> ${preferred_time || 'ASAP'}</p>
+    `
+  });
 
-    const response = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        Authorization: `Bearer ${RESEND_API_KEY}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        from: `Fyxters <${FROM_EMAIL}>`,
-        to,
-        subject,
-        html: message,
-      }),
-    });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      return {
-        statusCode: response.status,
-        body: JSON.stringify({ error: data }),
-      };
-    }
-
-    return {
-      statusCode: 200,
-      body: JSON.stringify({ success: true, id: data.id }),
-    };
-  } catch (err) {
-    return {
-      statusCode: 500,
-      body: JSON.stringify({ error: 'Failed to send email' }),
-    };
-  }
+  return {
+    statusCode: 200,
+    body: JSON.stringify({ success: true }),
+  };
 };
 
 export { handler };
