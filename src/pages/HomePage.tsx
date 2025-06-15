@@ -583,12 +583,15 @@ const repairIssues = [
                       <div className="flex items-center text-sm text-gray-600">
                         <MapPin className="w-4 h-4 mr-2" />
                         Your Location: {userLocation?.latitude.toFixed(6)}, {userLocation?.longitude.toFixed(6)}
-                        <button
-                          onClick={handleGetLocation}
-                          className="ml-2 text-blue-600 hover:text-blue-800"
-                        >
-                          Update
-                        </button>
+ <button
+  onClick={handleGetLocation}
+  className="ml-2 px-3 py-1 bg-blue-600 text-white rounded-md text-sm hover:bg-blue-700 transition"
+>
+  Update Location
+</button>
+<p className="text-sm text-gray-600 mt-2 ml-6">
+  Allow location access to show the nearest available technician to you.
+</p>
                       </div>
                       {technicianInfo && (
                         <>
