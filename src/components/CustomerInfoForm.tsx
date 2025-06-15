@@ -47,6 +47,17 @@ export function CustomerInfoForm({ selectedOption, deviceModel, price, onSubmit,
       if (insertError) {
         console.error('Error inserting customer info:', insertError);
       }
+await fetch('/.netlify/functions/send-contact-email', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    name,
+    email,
+    phone,
+    preferred_date: timing === 'later' ? selectedDate : null,
+    preferred_time: timing === 'later' ? selectedTime : null,
+  }),
+});
 
       onSubmit({ name, email, phone });
     } catch (err) {
