@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { supabase } from '../lib/supabase';
-import { Phone, Mail, User as UserIcon, Check } from 'lucide-react';
+import { Phone, Mail, User as UserIcon } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 interface CustomerInfoFormProps {
@@ -16,36 +16,38 @@ export function CustomerInfoForm({ selectedOption, deviceModel, price, onSubmit,
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
   const [termsAccepted, setTermsAccepted] = useState(false);
+  const [timing, setTiming] = useState<'now' | 'later'>('now');
+  const [selectedDate, setSelectedDate] = useState('');
+  const [selectedTime, setSelectedTime] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!termsAccepted) {
       setError('You must agree to the Terms and Conditions to continue');
       return;
     }
-    
+
     setLoading(true);
     setError(null);
 
     try {
-      console.log("Collecting customer info:", { name, email, phone });
-      
-      // Now try to insert into customer_info table
       const { error: insertError } = await supabase
         .from('customer_info')
-        .insert([{ name, email, phone }]);
+        .insert([{
+          name,
+          email,
+          phone,
+          preferred_date: timing === 'later' ? selectedDate : null,
+          preferred_time: timing === 'later' ? selectedTime : null,
+        }]);
 
       if (insertError) {
         console.error('Error inserting customer info:', insertError);
-        // Continue with the flow even if database insert fails
-      } else {
-        console.log("Customer info saved to database successfully");
       }
-      
-      // Pass the information to the parent component
+
       onSubmit({ name, email, phone });
     } catch (err) {
       console.error('Error processing customer info:', err);
@@ -58,12 +60,11 @@ export function CustomerInfoForm({ selectedOption, deviceModel, price, onSubmit,
   return (
     <div className="max-w-xl mx-auto bg-white rounded-lg shadow-lg p-6">
       <h2 className="text-2xl font-semibold mb-6">Enter Your Information</h2>
-      
+
       <form onSubmit={handleSubmit} className="space-y-6">
+        {/* Name */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Full Name
-          </label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <UserIcon className="h-5 w-5 text-gray-400" />
@@ -79,10 +80,9 @@ export function CustomerInfoForm({ selectedOption, deviceModel, price, onSubmit,
           </div>
         </div>
 
+        {/* Email */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Email
-          </label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <Mail className="h-5 w-5 text-gray-400" />
@@ -98,10 +98,9 @@ export function CustomerInfoForm({ selectedOption, deviceModel, price, onSubmit,
           </div>
         </div>
 
+        {/* Phone */}
         <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">
-            Phone Number
-          </label>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Phone Number</label>
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <Phone className="h-5 w-5 text-gray-400" />
@@ -116,7 +115,46 @@ export function CustomerInfoForm({ selectedOption, deviceModel, price, onSubmit,
             />
           </div>
         </div>
-        
+
+        {/* Timing Selection */}
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-2">When would you like the repair?</label>
+          <div className="flex gap-4">
+            <label className="flex items-center gap-2">
+              <input type="radio" value="now" checked={timing === 'now'} onChange={() => setTiming('now')} />
+              Repair Now
+            </label>
+            <label className="flex items-center gap-2">
+              <input type="radio" value="later" checked={timing === 'later'} onChange={() => setTiming('later')} />
+              Choose Date & Time
+            </label>
+          </div>
+          {timing === 'later' && (
+            <div className="mt-4 space-y-2">
+              <input
+                type="date"
+                value={selectedDate}
+                onChange={(e) => setSelectedDate(e.target.value)}
+                className="w-full border p-2 rounded"
+                min={new Date().toISOString().split('T')[0]}
+              />
+              <select
+                value={selectedTime}
+                onChange={(e) => setSelectedTime(e.target.value)}
+                className="w-full border p-2 rounded"
+              >
+                <option value="">Select Time</option>
+                <option>10:00 AM</option>
+                <option>11:00 AM</option>
+                <option>1:00 PM</option>
+                <option>3:00 PM</option>
+                <option>5:00 PM</option>
+              </select>
+            </div>
+          )}
+        </div>
+
+        {/* Terms */}
         <div className="border-t pt-4">
           <label className="flex items-start cursor-pointer">
             <input 
@@ -135,6 +173,7 @@ export function CustomerInfoForm({ selectedOption, deviceModel, price, onSubmit,
           <div className="text-red-600 text-sm bg-red-50 p-3 rounded-md">{error}</div>
         )}
 
+        {/* Buttons */}
         <div className="flex gap-4">
           <button
             type="button"
@@ -151,7 +190,7 @@ export function CustomerInfoForm({ selectedOption, deviceModel, price, onSubmit,
             {loading ? 'Processing...' : 'Continue'}
           </button>
         </div>
-        
+
         <p className="text-xs text-gray-500 text-center mt-4">
           By continuing, you acknowledge that your information will be used to process your repair request in accordance with our privacy policy.
         </p>
