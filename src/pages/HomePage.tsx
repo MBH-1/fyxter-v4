@@ -574,8 +574,8 @@ const repairIssues = [
       >
         Update Location
       </button>
-      <p className="text-sm text-gray-600 mt-2">
-        Allow location access to show the nearest available technician to you.
+      <p className="text-sm text-gray-400 mt-2">
+        (Allow location access to show the nearest available technician to you.)
       </p>
     </div>
 
