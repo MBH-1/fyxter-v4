@@ -44,8 +44,6 @@ export function Layout({ children }: LayoutProps) {
       <meta property="og:site_name" content="Fyxters" />
       <meta property="og:locale" content="en_CA" />
       <meta property="og:see_also" content="https://www.instagram.com/fyxters/" />
-          {/* Google Search Console Verification */}
- <meta name="google-site-verification" content="cnMdCfF-9RLPp6ecLCDUR-iJWAZgETtSz-jZaIvsCcM" />
 
     </Helmet>
       {/* Header */}
