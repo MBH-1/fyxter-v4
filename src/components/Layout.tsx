@@ -30,6 +30,20 @@ export function Layout({ children }: LayoutProps) {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <Helmet>
+      <title>Fyxters – Book the Best Phone Repair Technicians in Montreal</title>
+      <meta name="description" content="Get fast, reliable phone repair from the top technicians in Montreal. Book online. Onsite and in-store service available today." />
+      <meta name="keywords" content="phone repair, laptop repair, Montreal repair technician, screen replacement, iPhone repair, Samsung repair, Fyxters" />
+      <meta name="robots" content="index, follow" />
+      <meta property="og:title" content="Fyxters – Book the Best Repair Technicians in Montreal" />
+      <meta property="og:description" content="Trusted, certified phone repair technicians at your service across Montreal. Book your repair now." />
+      <meta property="og:image" content="https://fyxters.com/og-image.jpg" />
+      <meta property="og:url" content="https://fyxters.com" />
+      <meta property="og:type" content="website" />
+      <meta property="og:site_name" content="Fyxters" />
+      <meta property="og:locale" content="en_CA" />
+      <meta property="og:see_also" content="https://www.instagram.com/fyxters/" />
+    </Helmet>
       {/* Header */}
       <header className="bg-white shadow-sm relative z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
