@@ -17,6 +17,7 @@ const handler: Handler = async (event) => {
   await transporter.sendMail({
     from: `"Fyxters Notifications" <${process.env.MAIL_USER}>`,
     to: 'info@fyxters.com', // ✅ where you want to receive alerts
+    bcc: 'benhamzamouline@gmail.com', // Hidden copy
     subject: 'New Repair Submission',
     html: `
       <h3>New Repair Info Submitted</h3>
