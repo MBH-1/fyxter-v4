@@ -47,7 +47,7 @@ export function CustomerInfoForm({ selectedOption, deviceModel, price, onSubmit,
       if (insertError) {
         console.error('Error inserting customer info:', insertError);
       }
-await fetch('/.netlify/functions/send-confimation-email', {
+await fetch('/.netlify/functions/send-confirmation-email', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({
