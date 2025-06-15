@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import { FyxtersLogo } from './FyxtersLogo';
 import { Footer } from './Footer';
+import { Helmet } from 'react-helmet';
 
 interface LayoutProps {
   children: React.ReactNode;
