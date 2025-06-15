@@ -562,65 +562,74 @@ const repairIssues = [
             </div>
 
             {/* Map */}
-            <div ref={technicianSectionRef} className="bg-white rounded-lg shadow-sm overflow-hidden">
-              <div className="p-6">
-                <h2 className="text-xl font-semibold mb-4">Nearest Available Technician</h2>
-                {locationLoading ? (
-                  <div className="text-gray-600">Getting your location...</div>
-                ) : locationError ? (
-                  <div className="text-red-600">
-                    {locationError}
-                    <button
-                      onClick={handleGetLocation}
-                      className="ml-2 px-3 py-1 bg-blue-500 text-white rounded-lg text-sm"
-                    >
-                      Try Again
-                    </button>
-                  </div>
-                ) : (
-                  <>
-                    <div className="mb-4 space-y-2">
-                      <div className="flex items-center text-sm text-gray-600">
-                        <MapPin className="w-4 h-4 mr-2" />
-                        Your Location: {userLocation?.latitude.toFixed(6)}, {userLocation?.longitude.toFixed(6)}
- <button
-  onClick={handleGetLocation}
-  className="ml-2 px-3 py-1 bg-blue-600 text-white rounded-md text-sm hover:bg-blue-700 transition"
->
-  Update Location
-</button>
-<p className="text-sm text-gray-600 mt-2 ml-6">
-  Allow location access to show the nearest available technician to you.
-</p>
-                      </div>
-                      {technicianInfo && (
-                        <>
-                          <div className="flex items-center text-sm text-gray-600">
-                            <MapPin className="w-4 h-4 mr-2" />
-                            Distance: {technicianInfo.distance}
-                          </div>
-                          <div className="flex items-center text-sm text-gray-600">
-                            <Clock className="w-4 h-4 mr-2" />
-                            Estimated arrival: {technicianInfo.duration}
-                          </div>
-                          <div className="flex items-center text-sm text-gray-600">
-                            <User className="w-4 h-4 mr-2" />
-                            Technician: {technicianInfo.name} ({technicianInfo.rating.toFixed(1)} ⭐)
-                          </div>
-                        </>
-                      )}
-                    </div>
-                  </>
-                )}
-              </div>
-              {!mapLoaded && !locationError && (
-                <div className="h-[400px] flex items-center justify-center bg-gray-100">
-                  <div className="text-gray-500">Loading map...</div>
-                </div>
-              )}
-              <div id="map" className="h-[400px]" style={{ display: mapLoaded ? 'block' : 'none' }}></div>
+<div ref={technicianSectionRef} className="bg-white rounded-lg shadow-sm overflow-hidden">
+  <div className="p-6">
+    <h2 className="text-xl font-semibold mb-2">Nearest Available Technician</h2>
+
+    {/* Update Location Button & Message */}
+    <div className="mb-4">
+      <button
+        onClick={handleGetLocation}
+        className="px-4 py-2 bg-blue-600 text-white rounded-md text-sm hover:bg-blue-700 transition"
+      >
+        Update Location
+      </button>
+      <p className="text-sm text-gray-600 mt-2">
+        Allow location access to show the nearest available technician to you.
+      </p>
+    </div>
+
+    {/* Location Status */}
+    {locationLoading ? (
+      <div className="text-gray-600">Getting your location...</div>
+    ) : locationError ? (
+      <div className="text-red-600">
+        {locationError}
+        <button
+          onClick={handleGetLocation}
+          className="ml-2 px-3 py-1 bg-blue-500 text-white rounded-lg text-sm"
+        >
+          Try Again
+        </button>
+      </div>
+    ) : (
+      <div className="mb-4 space-y-2">
+        {/* Your Location */}
+        <div className="flex items-center text-sm text-gray-600">
+          <MapPin className="w-4 h-4 mr-2" />
+          Your Location: {userLocation?.latitude.toFixed(6)}, {userLocation?.longitude.toFixed(6)}
+        </div>
+
+        {/* Technician Info */}
+        {technicianInfo && (
+          <>
+            <div className="flex items-center text-sm text-gray-600">
+              <MapPin className="w-4 h-4 mr-2" />
+              Distance: {technicianInfo.distance}
             </div>
-          </div>
+            <div className="flex items-center text-sm text-gray-600">
+              <Clock className="w-4 h-4 mr-2" />
+              Estimated arrival: {technicianInfo.duration}
+            </div>
+            <div className="flex items-center text-sm text-gray-600">
+              <User className="w-4 h-4 mr-2" />
+              Technician: {technicianInfo.name} ({technicianInfo.rating.toFixed(1)} ⭐)
+            </div>
+          </>
+        )}
+      </div>
+    )}
+  </div>
+
+  {/* Map section */}
+  {!mapLoaded && !locationError && (
+    <div className="h-[400px] flex items-center justify-center bg-gray-100">
+      <div className="text-gray-500">Loading map...</div>
+    </div>
+  )}
+  <div id="map" className="h-[400px]" style={{ display: mapLoaded ? 'block' : 'none' }}></div>
+</div>
+
 
           {/* Repair Options */}
           {selectedDevice && !showDiagnosticCard && (
