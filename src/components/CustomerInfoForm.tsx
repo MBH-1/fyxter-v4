@@ -125,7 +125,7 @@ await fetch('/.netlify/functions/send-confirmation-email', {
               required
             />
           </div>
-        </div>
+        </div>{timing === 'later' &&
 
         {/* Timing Selection */}
         <div>
@@ -142,6 +142,7 @@ await fetch('/.netlify/functions/send-confirmation-email', {
           </div>
           {timing === 'later' && (
             <div className="mt-4 space-y-2">
+              <label className="text-sm font-medium text-gray-700">Select Date</label>
               <input
                 type="date"
                 value={selectedDate}
@@ -149,6 +150,7 @@ await fetch('/.netlify/functions/send-confirmation-email', {
                 className="w-full border p-2 rounded"
                 min={new Date().toISOString().split('T')[0]}
               />
+               <label className="text-sm font-medium text-gray-700">Select Time</label>
               <select
                 value={selectedTime}
                 onChange={(e) => setSelectedTime(e.target.value)}
