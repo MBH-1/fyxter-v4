@@ -36,28 +36,17 @@ export function CustomerInfoForm({ selectedOption, deviceModel, price, onSubmit,
     try {
       const { error: insertError } = await supabase
         .from('customer_info')
-        .insert([{
-          name,
-          email,
-          phone,
-          preferred_date: timing === 'later' ? selectedDate : null,
-          preferred_time: timing === 'later' ? selectedTime : null,
-        }]);
+        .insert([{ name, email, phone, preferred_date: timing === 'later' ? selectedDate : null, preferred_time: timing === 'later' ? selectedTime : null }]);
 
       if (insertError) {
         console.error('Error inserting customer info:', insertError);
       }
-await fetch('/.netlify/functions/send-confirmation-email', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({
-    name,
-    email,
-    phone,
-    preferred_date: timing === 'later' ? selectedDate : null,
-    preferred_time: timing === 'later' ? selectedTime : null,
-  }),
-});
+
+      await fetch('/.netlify/functions/send-confirmation-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, phone, preferred_date: timing === 'later' ? selectedDate : null, preferred_time: timing === 'later' ? selectedTime : null }),
+      });
 
       onSubmit({ name, email, phone });
     } catch (err) {
@@ -125,21 +114,32 @@ await fetch('/.netlify/functions/send-confirmation-email', {
               required
             />
           </div>
-        </div>{timing === 'later' &&
+        </div>
 
         {/* Timing Selection */}
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-2">When would you like the repair?</label>
           <div className="flex gap-4">
             <label className="flex items-center gap-2">
-              <input type="radio" value="now" checked={timing === 'now'} onChange={() => setTiming('now')} />
+              <input
+                type="radio"
+                value="now"
+                checked={timing === 'now'}
+                onChange={() => setTiming('now')}
+              />
               Repair Now
             </label>
             <label className="flex items-center gap-2">
-              <input type="radio" value="later" checked={timing === 'later'} onChange={() => setTiming('later')} />
+              <input
+                type="radio"
+                value="later"
+                checked={timing === 'later'}
+                onChange={() => setTiming('later')}
+              />
               Choose Date & Time
             </label>
           </div>
+
           {timing === 'later' && (
             <div className="mt-4 space-y-2">
               <label className="text-sm font-medium text-gray-700">Select Date</label>
@@ -150,7 +150,7 @@ await fetch('/.netlify/functions/send-confirmation-email', {
                 className="w-full border p-2 rounded"
                 min={new Date().toISOString().split('T')[0]}
               />
-               <label className="text-sm font-medium text-gray-700">Select Time</label>
+              <label className="text-sm font-medium text-gray-700">Select Time</label>
               <select
                 value={selectedTime}
                 onChange={(e) => setSelectedTime(e.target.value)}
@@ -170,7 +170,7 @@ await fetch('/.netlify/functions/send-confirmation-email', {
         {/* Terms */}
         <div className="border-t pt-4">
           <label className="flex items-start cursor-pointer">
-            <input 
+            <input
               type="checkbox"
               checked={termsAccepted}
               onChange={(e) => setTermsAccepted(e.target.checked)}
@@ -211,3 +211,4 @@ await fetch('/.netlify/functions/send-confirmation-email', {
     </div>
   );
 }
+
