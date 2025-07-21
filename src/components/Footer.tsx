@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Facebook, Twitter, Instagram, Linkedin, Mail, Phone } from 'lucide-react';
+import { FaTiktok } from 'react-icons/fa';
 import { FyxtersLogo } from './FyxtersLogo';
 
 export function Footer() {
@@ -29,6 +30,9 @@ export function Footer() {
               </a>
               <a href="https://linkedin.com/company/fyxters" className="hover:text-white transition-colors">
                 <Linkedin size={20} />
+                  </a>
+              <a href="https://www.tiktok.com/@fyxters" className="hover:text-white transition-colors">
+                <FaTiktok size={20} />
               </a>
             </div>
           </div>
