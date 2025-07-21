@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Facebook, Twitter, Instagram, Linkedin, Mail, Phone } from 'lucide-react';
-import { FaTiktok } from 'react-icons/fa';
 import { FyxtersLogo } from './FyxtersLogo';
 
 export function Footer() {
@@ -30,9 +29,6 @@ export function Footer() {
               </a>
               <a href="https://linkedin.com/company/fyxters" className="hover:text-white transition-colors">
                 <Linkedin size={20} />
-                  </a>
-              <a href="https://www.tiktok.com/@fyxters" className="hover:text-white transition-colors">
-                <FaTiktok size={20} />
               </a>
             </div>
           </div>
@@ -53,7 +49,6 @@ export function Footer() {
               <li>
                 <Link to="/blog" className="hover:text-white transition-colors">Blog</Link>
               </li>
-              
             </ul>
           </div>
 
@@ -85,13 +80,13 @@ export function Footer() {
             <ul className="space-y-2">
               <li className="flex items-center gap-2">
                 <Phone size={16} />
-                <a href="tel:+1234567890" className="hover:text-white transition-colors">
+                <a href="tel:+15148652788" className="hover:text-white transition-colors">
                   (514) 865-2788
                 </a>
               </li>
               <li className="flex items-center gap-2">
                 <Mail size={16} />
-                <a href="mailto:support@fyxters.com" className="hover:text-white transition-colors">
+                <a href="mailto:info@fyxters.com" className="hover:text-white transition-colors">
                   info@fyxters.com
                 </a>
               </li>
