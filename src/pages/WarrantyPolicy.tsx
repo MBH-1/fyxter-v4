@@ -111,7 +111,7 @@ export function WarrantyPolicy() {
               If you experience an issue with your repaired device that you believe is covered under warranty:
             </p>
             <ol>
-              <li>Contact our customer service team at (123) 456-7890 or support@fyxters.com</li>
+              <li>Contact our customer service team at (514) 865-2788 or info@fyxters.com</li>
               <li>Provide your order number or the email address used for the original repair</li>
               <li>Describe the issue you're experiencing in detail</li>
               <li>Our team will verify your warranty coverage and schedule a warranty service</li>
@@ -138,8 +138,8 @@ export function WarrantyPolicy() {
               our customer support team is available:
             </p>
             <ul>
-              <li>Phone: (123) 456-7890</li>
-              <li>Email: support@fyxters.com</li>
+              <li>Phone: (514) 865-2788</li>
+              <li>Email: info@fyxters.com</li>
               <li>Hours: Monday-Friday: 9AM-7PM, Saturday: 10AM-5PM</li>
             </ul>
           </div>
