@@ -18,6 +18,7 @@ import { RepairConfirmation } from './pages/RepairConfirmation';
 import { supabase } from './lib/supabase';
 
 // Technician-only route component
+// test build trigger
 const TechnicianRoute = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = React.useState(true);
   const [isTechnician, setIsTechnician] = React.useState(false);
