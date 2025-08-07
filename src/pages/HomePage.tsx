@@ -5,7 +5,7 @@ import { loader, getCurrentLocation, calculateRoute, getTechnicianInfo } from '.
 import { RepairOptions } from '../components/RepairOptions';
 import { CustomerInfoForm } from '../components/CustomerInfoForm';
 import { PaymentConfirmation } from '../components/PaymentConfirmation';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
 import { Phone as PhoneIcon, MapPin, Clock, User, Shield, PenTool as Tool, Ticket, SearchIcon, AlertCircle, Check } from 'lucide-react';
 import { CreditCard } from 'lucide-react';
 
@@ -248,7 +248,22 @@ export function HomePage() {
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">Model</label>
                       <div className="grid grid-cols-2 gap-2 max-h-[300px] overflow-y-auto">
-                        {getDeviceModels(selectedBrand).map(model => (<button key={model.id} onClick={() => handleDeviceSelect(devicePrices.find(d => d.model === model.value)!)} className={`p-3 text-center border rounded-lg transition-colors ${selectedDevice?.model === model.value ? 'border-black bg-black text-white' : 'hover:border-black'}`}>{model.name}</button>))}
+                        {getDeviceModels(selectedBrand).map(model => {
+  const modelSlug = model.value.toLowerCase();
+  const brandSlug = selectedBrand.toLowerCase();
+
+  return (
+    <Link
+      key={model.id}
+      to={`/repair/${brandSlug}/${modelSlug}`}
+      className={`p-3 text-center border rounded-lg transition-colors block ${
+        selectedDevice?.model === model.value ? 'border-black bg-black text-white' : 'hover:border-black'
+      }`}
+    >
+      {model.name}
+    </Link>
+  );
+})}
                       </div>
                     </div>
                   )}
