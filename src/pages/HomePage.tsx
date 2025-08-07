@@ -10,6 +10,7 @@ import { Phone as PhoneIcon, MapPin, Clock, User, Shield, PenTool as Tool, Ticke
 import { CreditCard } from 'lucide-react';
 
 export function HomePage() {
+  const { brand, model } = useParams();
   const [devicePrices, setDevicePrices] = useState<DevicePrice[]>([]);
   const [userLocation, setUserLocation] = useState<Location | null>(null);
   const [loading, setLoading] = useState(true);
@@ -45,6 +46,20 @@ export function HomePage() {
     const sessionId = urlParams.get('session_id');
     if (sessionId) setOrderComplete(true);
   }, []);
+  useEffect(() => {
+  if (brand && model && devicePrices.length > 0) {
+    const formattedBrand = brand.charAt(0).toUpperCase() + brand.slice(1);
+    setSelectedBrand(formattedBrand);
+
+    const matchedDevice = devicePrices.find(
+      d => d.model.toLowerCase() === model.toLowerCase()
+    );
+
+    if (matchedDevice) {
+      setSelectedDevice(matchedDevice);
+    }
+  }
+}, [brand, model, devicePrices]);
 
   const fetchDevicePrices = async () => {
     try {
