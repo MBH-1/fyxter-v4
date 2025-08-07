@@ -58,7 +58,7 @@ function App() {
   
   return (
     <Routes>
-      <Route path="/" element={
+      <Route path="/repair/:brand/:model" element={
         <Layout>
           <HomePage />
         </Layout>
