@@ -52,7 +52,8 @@ export function HomePage() {
     setSelectedBrand(formattedBrand);
 
     const matchedDevice = devicePrices.find(
-      d => d.model.toLowerCase() === model.toLowerCase()
+      d => d.model.toLowerCase() === model.toLowerCase().replace(/-/g, '_')
+
     );
 
     if (matchedDevice) {
@@ -264,7 +265,7 @@ export function HomePage() {
                       <label className="block text-sm font-medium text-gray-700 mb-1">Model</label>
                       <div className="grid grid-cols-2 gap-2 max-h-[300px] overflow-y-auto">
                         {getDeviceModels(selectedBrand).map(model => {
-  const modelSlug = model.value.toLowerCase();
+const modelSlug = model.value.toLowerCase().replace(/_/g, '-');
   const brandSlug = selectedBrand.toLowerCase();
 
   return (
