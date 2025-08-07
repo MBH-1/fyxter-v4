@@ -34,6 +34,7 @@ const TechnicianRoute = ({ children }: { children: React.ReactNode }) => {
       }
       
       // Check if user is a technician
+      // Check if user is a technician
       const { data: technicianData } = await supabase
         .from('technicians')
         .select('id')
