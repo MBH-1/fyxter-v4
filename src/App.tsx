@@ -60,11 +60,19 @@ function App() {
   
   return (
     <Routes>
-      <Route path="/repair/:brand/:model" element={
-        <Layout>
-          <HomePage />
-        </Layout>
-      } />
+    {/* ✅ Add Home Page route */}
+    <Route path="/" element={
+      <Layout>
+        <HomePage />
+      </Layout>
+    } />
+
+    {/* SEO-friendly product URL route */}
+    <Route path="/repair/:brand/:model" element={
+      <Layout>
+        <HomePage />
+      </Layout>
+    } />
       <Route path="/how-it-works" element={
         <Layout>
           <HowItWorks />
