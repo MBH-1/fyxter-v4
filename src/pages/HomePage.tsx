@@ -5,11 +5,13 @@ import { loader, getCurrentLocation, calculateRoute, getTechnicianInfo } from '.
 import { RepairOptions } from '../components/RepairOptions';
 import { CustomerInfoForm } from '../components/CustomerInfoForm';
 import { PaymentConfirmation } from '../components/PaymentConfirmation';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation, useParams } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 import { Phone as PhoneIcon, MapPin, Clock, User, Shield, PenTool as Tool, Ticket, SearchIcon, AlertCircle, Check } from 'lucide-react';
 import { CreditCard } from 'lucide-react';
 
 export function HomePage() {
+  const { brand, model } = useParams();
   const [devicePrices, setDevicePrices] = useState<DevicePrice[]>([]);
   const [userLocation, setUserLocation] = useState<Location | null>(null);
   const [loading, setLoading] = useState(true);
@@ -27,6 +29,24 @@ export function HomePage() {
   const [mapLoaded, setMapLoaded] = useState(false);
   const technicianSectionRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
+  const brandMap: Record<string, string> = { iphone: 'iPhone', ipad: 'iPad', samsung: 'Samsung', google: 'Google' };
+
+const prettyBrand = brand ? (brandMap[brand.toLowerCase()] ?? (brand[0].toUpperCase() + brand.slice(1))) : null;
+
+const prettyModel = model
+  ? model
+      .replace(/-/g, ' ')                 // hyphens -> spaces
+      .replace(/\b\w/g, (c) => c.toUpperCase()) // Title Case words
+  : null;
+
+const pageTitle = (prettyBrand && prettyModel)
+  ? `${prettyBrand} ${prettyModel} Repair | Fyxters`
+  : 'Fyxters – Book the Best Phone Repair Technicians in Montreal';
+
+const pageDescription = (prettyBrand && prettyModel)
+  ? `Fast, reliable ${prettyBrand} ${prettyModel} repair. Book an expert Fyxters technician near you today.`
+  : 'Book the best phone repair technicians in Montreal for screen, battery, and charging port repairs. Fast, affordable, guaranteed.';
+
 
   const repairIssues = ['Screen Replacement', 'Battery Replacement', 'Charging Port', 'Other'];
 
@@ -45,6 +65,21 @@ export function HomePage() {
     const sessionId = urlParams.get('session_id');
     if (sessionId) setOrderComplete(true);
   }, []);
+  useEffect(() => {
+  if (brand && model && devicePrices.length > 0) {
+    const formattedBrand = brand.charAt(0).toUpperCase() + brand.slice(1);
+    setSelectedBrand(formattedBrand);
+
+    const matchedDevice = devicePrices.find(
+      d => d.model.toLowerCase() === model.toLowerCase().replace(/-/g, '_')
+
+    );
+
+    if (matchedDevice) {
+      setSelectedDevice(matchedDevice);
+    }
+  }
+}, [brand, model, devicePrices]);
 
   const fetchDevicePrices = async () => {
     try {
@@ -195,6 +230,13 @@ export function HomePage() {
 
   return (
     <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <Helmet>
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
+    <link rel="canonical" href={`https://fyxters.com${location.pathname}`} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+  </Helmet>
       {orderComplete ? (
         <div className="max-w-xl mx-auto bg-white rounded-lg shadow-lg p-8 text-center">
           <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -248,7 +290,22 @@ export function HomePage() {
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">Model</label>
                       <div className="grid grid-cols-2 gap-2 max-h-[300px] overflow-y-auto">
-                        {getDeviceModels(selectedBrand).map(model => (<button key={model.id} onClick={() => handleDeviceSelect(devicePrices.find(d => d.model === model.value)!)} className={`p-3 text-center border rounded-lg transition-colors ${selectedDevice?.model === model.value ? 'border-black bg-black text-white' : 'hover:border-black'}`}>{model.name}</button>))}
+                        {getDeviceModels(selectedBrand).map(model => {
+const modelSlug = model.value.toLowerCase().replace(/_/g, '-');
+  const brandSlug = selectedBrand.toLowerCase();
+
+  return (
+    <Link
+      key={model.id}
+      to={`/repair/${brandSlug}/${modelSlug}`}
+      className={`p-3 text-center border rounded-lg transition-colors block ${
+        selectedDevice?.model === model.value ? 'border-black bg-black text-white' : 'hover:border-black'
+      }`}
+    >
+      {model.name}
+    </Link>
+  );
+})}
                       </div>
                     </div>
                   )}

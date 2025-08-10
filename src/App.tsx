@@ -18,6 +18,7 @@ import { RepairConfirmation } from './pages/RepairConfirmation';
 import { supabase } from './lib/supabase';
 
 // Technician-only route component
+// test build trigger
 const TechnicianRoute = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = React.useState(true);
   const [isTechnician, setIsTechnician] = React.useState(false);
@@ -32,6 +33,7 @@ const TechnicianRoute = ({ children }: { children: React.ReactNode }) => {
         return;
       }
       
+      // Check if user is a technician
       // Check if user is a technician
       const { data: technicianData } = await supabase
         .from('technicians')
@@ -58,11 +60,19 @@ function App() {
   
   return (
     <Routes>
-      <Route path="/" element={
-        <Layout>
-          <HomePage />
-        </Layout>
-      } />
+    {/* ✅ Add Home Page route */}
+    <Route path="/" element={
+      <Layout>
+        <HomePage />
+      </Layout>
+    } />
+
+    {/* SEO-friendly product URL route */}
+    <Route path="/repair/:brand/:model" element={
+      <Layout>
+        <HomePage />
+      </Layout>
+    } />
       <Route path="/how-it-works" element={
         <Layout>
           <HowItWorks />
