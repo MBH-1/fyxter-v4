@@ -258,7 +258,7 @@ const pageDescription = (prettyBrand && prettyModel)
   { "@type": "City", "name": "West Island" },
   { "@type": "City", "name": "Downtown Montreal" },
   { "@type": "Country", "name": "Canada" }
-]
+],
       "serviceType": [
         "iPhone screen repair",
         "Samsung screen repair",
