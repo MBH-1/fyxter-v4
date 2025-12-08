@@ -240,13 +240,13 @@ const pageDescription = (prettyBrand && prettyModel)
   <meta property="og:title" content={pageTitle} />
   <meta property="og:description" content={pageDescription} />
   <meta property="og:url" content={`https://fyxters.com${location.pathname}`} />
-  <meta property="og:image" content="https://res.cloudinary.com/dqwxexsra/image/upload/v1765222595/fyxters_-logo_svbb1z.png" />
+  <meta property="og:image" content="https://res.cloudinary.com/dqwxexsra/image/upload/v1765227312/Open_graph_-Fyxters_wen4f7.png" />
 
   {/* Twitter Card (optional but recommended) */}
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content={pageTitle} />
   <meta name="twitter:description" content={pageDescription} />
-  <meta name="twitter:image" content="https://res.cloudinary.com/dqwxexsra/image/upload/v1765222595/fyxters_-logo_svbb1z.png" />
+  <meta name="twitter:image" content="https://res.cloudinary.com/dqwxexsra/image/upload/v1765227312/Open_graph_-Fyxters_wen4f7.png" />
 </Helmet>
 
       {orderComplete ? (
