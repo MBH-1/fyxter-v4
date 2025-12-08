@@ -236,6 +236,37 @@ const pageDescription = (prettyBrand && prettyModel)
   <link rel="canonical" href={`https://fyxters.com${location.pathname}`} />
   <meta property="og:title" content={pageTitle} />
   <meta property="og:description" content={pageDescription} />
+  <script type="application/ld+json">
+    {JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": ["Organization", "LocalBusiness"],
+      "name": "Fyxters",
+      "url": "https://fyxters.com/",
+      "description":
+        "Fyxters connects you with vetted phone and laptop repair technicians in Canada for fast, transparent repairs.",
+      "logo": "https://res.cloudinary.com/dqwxexsra/image/upload/v1765222595/fyxters_-logo_svbb1z.png",
+      "telephone": "+1-514-865-2788",
+     "areaServed": [
+  { "@type": "City", "name": "Montreal" },
+  { "@type": "City", "name": "Laval" },
+  { "@type": "City", "name": "Longueuil" },
+  { "@type": "City", "name": "Rosemont" },
+  { "@type": "City", "name": "Plateau-Mont-Royal" },
+  { "@type": "City", "name": "Griffintown" },
+  { "@type": "City", "name": "Saint-Laurent" },
+  { "@type": "City", "name": "Verdun" },
+  { "@type": "City", "name": "West Island" },
+  { "@type": "City", "name": "Downtown Montreal" },
+  { "@type": "Country", "name": "Canada" }
+]
+      "serviceType": [
+        "iPhone screen repair",
+        "Samsung screen repair",
+        "phone battery replacement",
+        "laptop repair"
+      ]
+    })}
+  </script>
 </Helmet>
 
 
