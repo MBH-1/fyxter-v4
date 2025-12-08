@@ -234,20 +234,10 @@ const pageDescription = (prettyBrand && prettyModel)
   <title>{pageTitle}</title>
   <meta name="description" content={pageDescription} />
   <link rel="canonical" href={`https://fyxters.com${location.pathname}`} />
-
-  {/* Open Graph */}
-  <meta property="og:type" content="website" />
   <meta property="og:title" content={pageTitle} />
   <meta property="og:description" content={pageDescription} />
-  <meta property="og:url" content={`https://fyxters.com${location.pathname}`} />
-  <meta property="og:image" content="https://res.cloudinary.com/dqwxexsra/image/upload/v1765227312/Open_graph_-Fyxters_wen4f7.png" />
-
-  {/* Twitter Card (optional but recommended) */}
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content={pageTitle} />
-  <meta name="twitter:description" content={pageDescription} />
-  <meta name="twitter:image" content="https://res.cloudinary.com/dqwxexsra/image/upload/v1765227312/Open_graph_-Fyxters_wen4f7.png" />
 </Helmet>
+
 
       {orderComplete ? (
         <div className="max-w-xl mx-auto bg-white rounded-lg shadow-lg p-8 text-center">
