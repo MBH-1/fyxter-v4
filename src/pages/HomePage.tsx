@@ -47,6 +47,36 @@ const pageDescription = (prettyBrand && prettyModel)
   ? `Fast, reliable ${prettyBrand} ${prettyModel} repair. Book an expert Fyxters technician near you today.`
   : 'Book the best phone repair technicians in Montreal for screen, battery, and charging port repairs. Fast, affordable, guaranteed.';
 
+    const pageUrl = `https://fyxters.com${location.pathname}`;
+
+  const serviceSchema = prettyBrand && prettyModel ? {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "name": `${prettyBrand} ${prettyModel} repair`,
+    "serviceType": `${prettyBrand} ${prettyModel} screen repair`,
+    "provider": {
+      "@type": ["Organization", "LocalBusiness"],
+      "name": "Fyxters",
+      "url": "https://fyxters.com/"
+    },
+    "areaServed": [
+      { "@type": "City", "name": "Montreal" },
+      { "@type": "City", "name": "Laval" },
+      { "@type": "City", "name": "Quebec City" },
+      { "@type": "City", "name": "Toronto" },
+      { "@type": "City", "name": "Calgary" },
+      "Rosemont",
+      "Griffintown"
+    ],
+    "url": pageUrl,
+    "offers": {
+      "@type": "Offer",
+      "url": pageUrl,
+      "availability": "https://schema.org/InStock"
+    }
+  } : null;
+
+
 
   const repairIssues = ['Screen Replacement', 'Battery Replacement', 'Charging Port', 'Other'];
 
@@ -231,11 +261,26 @@ const pageDescription = (prettyBrand && prettyModel)
   return (
     <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
 <Helmet>
+  {/* Basic SEO */}
   <title>{pageTitle}</title>
   <meta name="description" content={pageDescription} />
   <link rel="canonical" href={`https://fyxters.com${location.pathname}`} />
+
+  {/* Open Graph */}
+  <meta property="og:type" content="website" />
   <meta property="og:title" content={pageTitle} />
   <meta property="og:description" content={pageDescription} />
+  <meta property="og:url" content={`https://fyxters.com${location.pathname}`} />
+  <meta 
+    property="og:image" 
+    content="https://res.cloudinary.com/dqwxexsra/image/upload/v1765227312/Open_graph_-Fyxters_wen4f7.png" 
+  />
+  <meta property="og:image:width" content="500" />
+  <meta property="og:image:height" content="500" />
+
+  {/* ----------------------------- */}
+  {/* 1️⃣  ORGANIZATION / BUSINESS SCHEMA */}
+  {/* ----------------------------- */}
   <script type="application/ld+json">
     {JSON.stringify({
       "@context": "https://schema.org",
@@ -244,21 +289,22 @@ const pageDescription = (prettyBrand && prettyModel)
       "url": "https://fyxters.com/",
       "description":
         "Fyxters connects you with vetted phone and laptop repair technicians in Canada for fast, transparent repairs.",
-      "logo": "https://res.cloudinary.com/dqwxexsra/image/upload/v1765222595/fyxters_-logo_svbb1z.png",
+      "logo":
+        "https://res.cloudinary.com/dqwxexsra/image/upload/v1765222595/fyxters_-logo_svbb1z.png",
       "telephone": "+1-514-865-2788",
-     "areaServed": [
-  { "@type": "City", "name": "Montreal" },
-  { "@type": "City", "name": "Laval" },
-  { "@type": "City", "name": "Longueuil" },
-  { "@type": "City", "name": "Rosemont" },
-  { "@type": "City", "name": "Plateau-Mont-Royal" },
-  { "@type": "City", "name": "Griffintown" },
-  { "@type": "City", "name": "Saint-Laurent" },
-  { "@type": "City", "name": "Verdun" },
-  { "@type": "City", "name": "West Island" },
-  { "@type": "City", "name": "Downtown Montreal" },
-  { "@type": "Country", "name": "Canada" }
-],
+      "areaServed": [
+        { "@type": "City", "name": "Montreal" },
+        { "@type": "City", "name": "Laval" },
+        { "@type": "City", "name": "Longueuil" },
+        { "@type": "City", "name": "Rosemont" },
+        { "@type": "City", "name": "Plateau-Mont-Royal" },
+        { "@type": "City", "name": "Griffintown" },
+        { "@type": "City", "name": "Saint-Laurent" },
+        { "@type": "City", "name": "Verdun" },
+        { "@type": "City", "name": "West Island" },
+        { "@type": "City", "name": "Downtown Montreal" },
+        { "@type": "Country", "name": "Canada" }
+      ],
       "serviceType": [
         "iPhone screen repair",
         "Samsung screen repair",
@@ -267,7 +313,18 @@ const pageDescription = (prettyBrand && prettyModel)
       ]
     })}
   </script>
+
+  {/* ----------------------------- */}
+  {/* 2️⃣  SERVICE SCHEMA (Dynamic per page) */}
+  {/* Only added when brand + model exist */}
+  {/* ----------------------------- */}
+  {serviceSchema && (
+    <script type="application/ld+json">
+      {JSON.stringify(serviceSchema)}
+    </script>
+  )}
 </Helmet>
+
 
 
       {orderComplete ? (
