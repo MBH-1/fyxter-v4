@@ -109,5 +109,6 @@ export function TermsAndConditions() {
       communication, booking, and payment through Fyxters only.
     </p>
 
+   </div>
   </div>
 </div>
