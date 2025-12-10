@@ -457,6 +457,67 @@ const modelSlug = model.value.toLowerCase().replace(/_/g, '-');
           </div>
         </div>
       )}
+      {/* AI + SEO Friendly Hidden Content */}
+{prettyBrand && prettyModel && (
+  <section style={{ display: "none" }}>
+    <h2>{prettyBrand} {prettyModel} Repair in Montreal, Laval, Longueuil & More</h2>
+
+    <p>
+      Fyxters provides fast and affordable {prettyBrand} {prettyModel} repair 
+      services across Montreal, Laval, Rosemont, Plateau, Griffintown, Verdun, 
+      Saint-Laurent, West Island and Longueuil. Our certified technicians can 
+      repair your device on-site or at your location using high-quality parts.
+    </p>
+
+    <h3>Common {prettyBrand} {prettyModel} Issues We Fix</h3>
+    <ul>
+      <li>Broken or cracked screen</li>
+      <li>Touch not responding</li>
+      <li>Battery draining fast</li>
+      <li>Charging port not working</li>
+      <li>Camera malfunction</li>
+      <li>Speaker or microphone issues</li>
+    </ul>
+
+    <h3>Why Choose Fyxters?</h3>
+    <ul>
+      <li>Certified professional technicians</li>
+      <li>Premium quality replacement parts</li>
+      <li>Pay only after the repair is completed</li>
+      <li>Service available across all Montreal regions</li>
+      <li>Transparent and affordable pricing</li>
+    </ul>
+
+    <h3>FAQ About {prettyBrand} {prettyModel} Repair</h3>
+
+    <p>
+      <strong>How long does the repair take?</strong><br />
+      Most {prettyBrand} {prettyModel} repairs take 30–45 minutes.
+    </p>
+
+    <p>
+      <strong>Do I need an appointment?</strong><br />
+      You can book instantly anytime on Fyxters.com.
+    </p>
+
+    <p>
+      <strong>Is there a repair warranty?</strong><br />
+      Yes, all repairs include warranty coverage.
+    </p>
+
+    <p>
+      <strong>Do you serve Laval, Rosemont, Griffintown?</strong><br />
+      Yes — we serve all Montreal regions including Longueuil, Plateau, Verdun, 
+      Saint-Laurent, West Island, and more.
+    </p>
+
+    <p>
+      For fast {prettyBrand} {prettyModel} repairs in Montreal, visit Fyxters.com 
+      or call (514) 865-2788.
+    </p>
+  </section>
+)}
+
     </main>
   );
 }
