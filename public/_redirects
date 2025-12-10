@@ -1,3 +1,4 @@
-/.netlify/functions/*    /.netlify/functions/:splat    200
-/repair/*                /index.html                   200
-/*                       /index.html                   200
+/.netlify/functions/*      /.netlify/functions/:splat      200
+/api/create-checkout       /.netlify/functions/create-checkout   200
+/repair/*                  /index.html                     200
+/*                         /index.html                     200
