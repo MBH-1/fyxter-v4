@@ -110,9 +110,9 @@ export function PrivacyPolicy() {
               If you have any questions or concerns about our Privacy Policy or data practices, please contact us at:
             </p>
             <p>
-              Email: privacy@fyxters.com<br />
-              Phone: (123) 456-7890<br />
-              Address: 123 Repair Avenue, Tech City, TX 12345
+              Email: info@fyxters.com<br />
+              Phone: (514) 865-2788<br />
+            
             </p>
           </div>
         </div>
