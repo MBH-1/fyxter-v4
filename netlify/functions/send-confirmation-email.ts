@@ -2,7 +2,7 @@ import type { Handler } from '@netlify/functions';
 import nodemailer from 'nodemailer';
 
 const handler: Handler = async (event) => {
-  const { name, email, phone, preferred_date, preferred_time } = JSON.parse(event.body || '{}');
+  const { name, email, phone,  device, repair_type, preferred_date, preferred_time } = JSON.parse(event.body || '{}');
 
   const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
@@ -20,14 +20,24 @@ const handler: Handler = async (event) => {
     bcc: 'benhamzamouline@gmail.com', // Hidden copy
     subject: 'New Repair Submission',
     html: `
-      <h3>New Repair Info Submitted</h3>
-      <p><strong>Name:</strong> ${name}</p>
-      <p><strong>Email:</strong> ${email}</p>
-      <p><strong>Phone:</strong> ${phone}</p>
-      <p><strong>Date:</strong> ${preferred_date || 'ASAP'}</p>
-      <p><strong>Time:</strong> ${preferred_time || 'ASAP'}</p>
-    `
-  });
+  <h3>New Repair Info Submitted</h3>
+
+        <p><strong>Name:</strong> ${name || '-'}</p>
+        <p><strong>Email:</strong> ${email || '-'}</p>
+        <p><strong>Phone:</strong> ${phone || '-'}</p>
+
+        <hr />
+
+        <p><strong>Device:</strong> ${device || '-'}</p>
+        <p><strong>Repair Type:</strong> ${repair_type || '-'}</p>
+        <p><strong>Price:</strong> ${price ? `$${price}` : '-'}</p>
+
+        <hr />
+
+        <p><strong>Date:</strong> ${preferred_date || 'ASAP'}</p>
+        <p><strong>Time:</strong> ${preferred_time || 'ASAP'}</p>
+      `,
+    });
 
   return {
     statusCode: 200,
@@ -36,3 +46,4 @@ const handler: Handler = async (event) => {
 };
 
 export { handler };
+
