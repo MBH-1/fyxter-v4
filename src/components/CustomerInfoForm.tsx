@@ -45,7 +45,17 @@ export function CustomerInfoForm({ selectedOption, deviceModel, price, onSubmit,
       await fetch('/.netlify/functions/send-confirmation-email', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, phone, preferred_date: timing === 'later' ? selectedDate : null, preferred_time: timing === 'later' ? selectedTime : null }),
+       body: JSON.stringify({
+  name,
+  email,
+  phone,
+  device: deviceModel,
+  repair_type: selectedOption,
+  price,
+  preferred_date: timing === 'later' ? selectedDate : null,
+  preferred_time: timing === 'later' ? selectedTime : null,
+}),
+
       });
 
       onSubmit({ name, email, phone });
