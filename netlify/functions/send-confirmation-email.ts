@@ -11,7 +11,7 @@ const handler: Handler = async (event) => {
       phone,
       device,
       repair_type,
-      price,              // ✅ NOW DECLARED
+      price,
       preferred_date,
       preferred_time,
     }: {
@@ -25,27 +25,37 @@ const handler: Handler = async (event) => {
       preferred_time?: string;
     } = body;
 
+    // ⛔ REQUIRED FIELDS CHECK
+    if (!name || !email) {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({
+          success: false,
+          message: 'Missing required fields: name or email',
+        }),
+      };
+    }
 
-  const transporter = nodemailer.createTransport({
-    host: 'smtp.gmail.com',
-    port: 465,
-    secure: true,
-    auth: {
-      user: process.env.MAIL_USER,
-      pass: process.env.MAIL_PASS,
-    },
-  });
+    const transporter = nodemailer.createTransport({
+      host: 'smtp.gmail.com',
+      port: 465,
+      secure: true,
+      auth: {
+        user: process.env.MAIL_USER,
+        pass: process.env.MAIL_PASS,
+      },
+    });
 
-  await transporter.sendMail({
-    from: `"Fyxters Notifications" <${process.env.MAIL_USER}>`,
-    to: 'info@fyxters.com', // ✅ where you want to receive alerts
-    bcc: 'benhamzamouline@gmail.com', // Hidden copy
-    subject: 'New Repair Submission',
-    html: `
-  <h3>New Repair Info Submitted</h3>
+    await transporter.sendMail({
+      from: `"Fyxters Notifications" <${process.env.MAIL_USER}>`,
+      to: 'info@fyxters.com',
+      bcc: 'benhamzamouline@gmail.com',
+      subject: 'New Repair Submission',
+      html: `
+        <h3>New Repair Info Submitted</h3>
 
-        <p><strong>Name:</strong> ${name || '-'}</p>
-        <p><strong>Email:</strong> ${email || '-'}</p>
+        <p><strong>Name:</strong> ${name}</p>
+        <p><strong>Email:</strong> ${email}</p>
         <p><strong>Phone:</strong> ${phone || '-'}</p>
 
         <hr />
@@ -61,10 +71,18 @@ const handler: Handler = async (event) => {
       `,
     });
 
-  return {
-    statusCode: 200,
-    body: JSON.stringify({ success: true }),
-  };
+    return {
+      statusCode: 200,
+      body: JSON.stringify({ success: true }),
+    };
+  } catch (error) {
+    console.error('Send email error:', error);
+
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ success: false }),
+    };
+  }
 };
 
 export { handler };
