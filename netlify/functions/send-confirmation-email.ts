@@ -2,7 +2,29 @@ import type { Handler } from '@netlify/functions';
 import nodemailer from 'nodemailer';
 
 const handler: Handler = async (event) => {
-  const { name, email, phone,  device, repair_type, preferred_date, preferred_time } = JSON.parse(event.body || '{}');
+  try {
+    const body = event.body ? JSON.parse(event.body) : {};
+
+    const {
+      name,
+      email,
+      phone,
+      device,
+      repair_type,
+      price,              // ✅ NOW DECLARED
+      preferred_date,
+      preferred_time,
+    }: {
+      name?: string;
+      email?: string;
+      phone?: string;
+      device?: string;
+      repair_type?: string;
+      price?: number;
+      preferred_date?: string;
+      preferred_time?: string;
+    } = body;
+
 
   const transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
@@ -46,4 +68,5 @@ const handler: Handler = async (event) => {
 };
 
 export { handler };
+
 
