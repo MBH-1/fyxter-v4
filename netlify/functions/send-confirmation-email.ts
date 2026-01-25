@@ -1,6 +1,13 @@
 import type { Handler } from '@netlify/functions';
 import nodemailer from 'nodemailer';
 
+type TechnicianInfo = {
+  name: string;
+  rating: number;
+  distance: string;
+  duration: string;
+};
+
 const handler: Handler = async (event) => {
   try {
     const body = event.body ? JSON.parse(event.body) : {};
@@ -14,6 +21,7 @@ const handler: Handler = async (event) => {
       price,
       preferred_date,
       preferred_time,
+      technician,
     }: {
       name?: string;
       email?: string;
@@ -23,6 +31,7 @@ const handler: Handler = async (event) => {
       price?: number;
       preferred_date?: string;
       preferred_time?: string;
+      technician?: TechnicianInfo | null;
     } = body;
 
     // ⛔ REQUIRED FIELDS CHECK
@@ -35,6 +44,22 @@ const handler: Handler = async (event) => {
         }),
       };
     }
+
+    // ✅ Format technician block safely
+    const technicianHtml = technician
+      ? `
+        <hr />
+        <h4>Selected Technician</h4>
+        <p><strong>Name:</strong> ${technician.name}</p>
+        <p><strong>Rating:</strong> ⭐ ${technician.rating}</p>
+        <p><strong>Distance:</strong> ${technician.distance}</p>
+        <p><strong>ETA:</strong> ${technician.duration}</p>
+      `
+      : `
+        <hr />
+        <h4>Selected Technician</h4>
+        <p>Not available</p>
+      `;
 
     const transporter = nodemailer.createTransport({
       host: 'smtp.gmail.com',
@@ -68,6 +93,8 @@ const handler: Handler = async (event) => {
 
         <p><strong>Date:</strong> ${preferred_date || 'ASAP'}</p>
         <p><strong>Time:</strong> ${preferred_time || 'ASAP'}</p>
+
+        ${technicianHtml}
       `,
     });
 

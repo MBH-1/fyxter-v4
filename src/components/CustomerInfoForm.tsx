@@ -1,17 +1,27 @@
 import React, { useState } from 'react';
 import { supabase } from '../lib/supabase';
+import { Location } from '../lib/types';
 import { Phone, Mail, User as UserIcon } from 'lucide-react';
 import { Link } from 'react-router-dom';
+
+type TechnicianInfo = {
+  name: string;
+  distance: string;
+  duration: string;
+  rating: number;
+};
 
 interface CustomerInfoFormProps {
   selectedOption: 'original' | 'aftermarket' | 'onsite' | 'diagnostic';
   deviceModel: string;
   price: number;
+  userLocation: Location | null;
+  technicianInfo: TechnicianInfo | null;  
   onSubmit: (info: { name: string; email: string; phone: string }) => void;
   onBack: () => void;
 }
 
-export function CustomerInfoForm({ selectedOption, deviceModel, price, onSubmit, onBack }: CustomerInfoFormProps) {
+export function CustomerInfoForm({ selectedOption, deviceModel, price, userLocation, technicianInfo, onSubmit, onBack }: CustomerInfoFormProps) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -52,6 +62,10 @@ export function CustomerInfoForm({ selectedOption, deviceModel, price, onSubmit,
   device: deviceModel,
   repair_type: selectedOption,
   price,
+  technician: technicianInfo,
+  location: userLocation
+    ? { latitude: userLocation.latitude, longitude: userLocation.longitude }
+    : null,
   preferred_date: timing === 'later' ? selectedDate : null,
   preferred_time: timing === 'later' ? selectedTime : null,
 }),
@@ -89,6 +103,29 @@ export function CustomerInfoForm({ selectedOption, deviceModel, price, onSubmit,
       </div>
     </div>
   </div>
+      {technicianInfo && (
+  <div className="mb-6 rounded-lg border bg-white p-4">
+    <h3 className="text-sm font-medium text-gray-700 mb-2">
+      Selected technician
+    </h3>
+
+    <div className="text-sm text-gray-600 space-y-1">
+      <div>
+        <strong>Name:</strong> {technicianInfo.name}
+      </div>
+      <div>
+        <strong>Rating:</strong> ⭐ {technicianInfo.rating.toFixed(1)}
+      </div>
+      <div>
+        <strong>Distance:</strong> {technicianInfo.distance}
+      </div>
+      <div>
+        <strong>ETA:</strong> {technicianInfo.duration}
+      </div>
+    </div>
+  </div>
+)}
+
 
   <form onSubmit={handleSubmit} className="space-y-6">
     {/* Name */}
