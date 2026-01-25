@@ -44,28 +44,31 @@ export function CustomerInfoForm({ selectedOption, deviceModel, price, userLocat
   setError(null);
 
   try {
-    // ✅ 1. CREATE JOB (before payment)
-    const { error: jobError } = await supabase
-      .from('jobs')
-      .insert({
-        customer_name: name,
-        customer_email: email,
-        customer_phone: phone,
-        device_model: deviceModel,
-        repair_type: selectedOption,
-        service_type: selectedOption,
-        price: price,
-        status: 'in_progress',
-        technician_id: null, // assigned later by admin
-        payment_status: 'unpaid',
-        notes: null
-      });
+   // ✅ 1. CREATE JOB (before payment)
+const { data: jobData, error: jobError } = await supabase
+  .from('jobs')
+  .insert({
+    customer_name: name,
+    customer_email: email,
+    customer_phone: phone,
+    device_model: deviceModel,
+    repair_type: selectedOption,
+    service_type: selectedOption,
+    price: price,
+    status: 'in_progress',
+    technician_id: null, // assigned later by admin
+    payment_status: 'unpaid',
+    notes: null
+  })
+  .select(); // 👈 IMPORTANT
 
-    if (jobError) {
-      console.error('Error creating job:', jobError);
-      setError('Could not create the job. Please try again.');
-      return;
-    }
+console.log('JOB INSERT RESULT:', jobData, jobError);
+
+if (jobError) {
+  console.error('Error creating job:', jobError);
+  setError('Could not create the job. Please try again.');
+  return;
+}
 
     // ✅ 2. SEND EMAIL (keep existing logic)
     await fetch('/.netlify/functions/send-confirmation-email', {
