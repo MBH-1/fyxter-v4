@@ -102,6 +102,29 @@ export function CustomerInfoForm({ selectedOption, deviceModel, price, userLocat
       </div>
     </div>
   </div>
+      {technicianInfo && (
+  <div className="mb-6 rounded-lg border bg-white p-4">
+    <h3 className="text-sm font-medium text-gray-700 mb-2">
+      Selected technician
+    </h3>
+
+    <div className="text-sm text-gray-600 space-y-1">
+      <div>
+        <strong>Name:</strong> {technicianInfo.name}
+      </div>
+      <div>
+        <strong>Rating:</strong> ⭐ {technicianInfo.rating.toFixed(1)}
+      </div>
+      <div>
+        <strong>Distance:</strong> {technicianInfo.distance}
+      </div>
+      <div>
+        <strong>ETA:</strong> {technicianInfo.duration}
+      </div>
+    </div>
+  </div>
+)}
+
 
   <form onSubmit={handleSubmit} className="space-y-6">
     {/* Name */}
