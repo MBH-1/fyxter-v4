@@ -15,6 +15,7 @@ import { BlogPage } from './pages/BlogPage';
 import { ShippingPolicy } from './pages/ShippingPolicy';
 import { TestPage } from './pages/TestPage';
 import { RepairConfirmation } from './pages/RepairConfirmation';
+import Dashboard from './pages/Dashboard';
 import { supabase } from './lib/supabase';
 
 // Technician-only route component
@@ -98,6 +99,12 @@ function App() {
           <UserDashboard />
         </TechnicianRoute>
       } />
+      <Route
+  path="/admin"
+  element={
+    <Dashboard />
+  }
+/>
     </Routes>
   );
 }
