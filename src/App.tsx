@@ -108,14 +108,7 @@ function App() {
           <UserDashboard />
         </TechnicianRoute>
       } />
- <Route
-  path="/admin"
-  element={
-    <AdminRoute>
-      <Dashboard />
-    </AdminRoute>
-  }
-/>
+<Route path="/admin" element={<Dashboard />} />
     </Routes>
   );
 }
