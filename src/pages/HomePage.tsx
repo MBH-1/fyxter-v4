@@ -355,6 +355,7 @@ const pageDescription = (prettyBrand && prettyModel)
           deviceModel={selectedDevice?.model || ''}
           price={getSelectedPrice()}
           userLocation={userLocation}
+          technicianInfo={technicianInfo}  
           onSubmit={handleCustomerInfoSubmit}
           onBack={() => setSelectedOption(null)}
         />
