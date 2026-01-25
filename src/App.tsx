@@ -19,6 +19,7 @@ import Dashboard from './pages/Dashboard';
 import AdminRoute from './components/AdminRoute';
 import { supabase } from './lib/supabase';
 import Login from './pages/Login';
+import { useEffect } from 'react';
 
 
 // Technician-only route component
@@ -61,6 +62,10 @@ const TechnicianRoute = ({ children }: { children: React.ReactNode }) => {
 
 function App() {
   const location = useLocation();
+  // 🔑 REQUIRED for magic link + PKCE
+  useEffect(() => {
+    supabase.auth.exchangeCodeForSession(window.location.href);
+  }, []);
   
   return (
     <Routes>
