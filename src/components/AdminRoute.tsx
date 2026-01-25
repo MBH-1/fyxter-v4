@@ -29,5 +29,5 @@ export default function AdminRoute({ children }: { children: JSX.Element }) {
   }, []);
 
   if (loading) return <div className="p-6">Loading…</div>;
-  return isAdmin ? children : <Navigate to="/" />;
+  return isAdmin ? children : <Navigate to="/login" />;
 }
