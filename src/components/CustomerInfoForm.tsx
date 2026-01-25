@@ -4,16 +4,24 @@ import { Location } from '../lib/types';
 import { Phone, Mail, User as UserIcon } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
+type TechnicianInfo = {
+  name: string;
+  distance: string;
+  duration: string;
+  rating: number;
+};
+
 interface CustomerInfoFormProps {
   selectedOption: 'original' | 'aftermarket' | 'onsite' | 'diagnostic';
   deviceModel: string;
   price: number;
   userLocation: Location | null;
+  technicianInfo: TechnicianInfo | null;  
   onSubmit: (info: { name: string; email: string; phone: string }) => void;
   onBack: () => void;
 }
 
-export function CustomerInfoForm({ selectedOption, deviceModel, price, userLocation, onSubmit, onBack }: CustomerInfoFormProps) {
+export function CustomerInfoForm({ selectedOption, deviceModel, price, userLocation, technicianInfo, onSubmit, onBack }: CustomerInfoFormProps) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
