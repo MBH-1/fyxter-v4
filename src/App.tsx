@@ -16,6 +16,7 @@ import { ShippingPolicy } from './pages/ShippingPolicy';
 import { TestPage } from './pages/TestPage';
 import { RepairConfirmation } from './pages/RepairConfirmation';
 import Dashboard from './pages/Dashboard';
+import AdminRoute from './components/AdminRoute';
 import { supabase } from './lib/supabase';
 
 // Technician-only route component
@@ -99,10 +100,12 @@ function App() {
           <UserDashboard />
         </TechnicianRoute>
       } />
-      <Route
+ <Route
   path="/admin"
   element={
-    <Dashboard />
+    <AdminRoute>
+      <Dashboard />
+    </AdminRoute>
   }
 />
     </Routes>
