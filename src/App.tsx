@@ -18,6 +18,8 @@ import { RepairConfirmation } from './pages/RepairConfirmation';
 import Dashboard from './pages/Dashboard';
 import AdminRoute from './components/AdminRoute';
 import { supabase } from './lib/supabase';
+import Login from './pages/Login';
+
 
 // Technician-only route component
 // test build trigger
@@ -94,6 +96,7 @@ function App() {
       <Route path="/blog" element={<BlogPage />} />
       <Route path="/shipping" element={<ShippingPolicy />} />
       <Route path="/test" element={<TestPage />} />
+      <Route path="/login" element={<Login />} />
       <Route path="/repair-confirmation" element={<Layout><RepairConfirmation /></Layout>} />
       <Route path="/dashboard" element={
         <TechnicianRoute>
