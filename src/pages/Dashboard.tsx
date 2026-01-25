@@ -14,43 +14,40 @@ type Job = {
 };
 
 export default function Dashboard() {
+  const navigate = useNavigate();
+
   const [jobs, setJobs] = useState<Job[]>([]);
   const [loading, setLoading] = useState(true);
+  const [checking, setChecking] = useState(true);
 
+  // 🔐 ADMIN CHECK (FIRST)
   useEffect(() => {
-    fetchJobs();
-  }, []);
-const navigate = useNavigate();
-const [checking, setChecking] = useState(true);
+    const checkAdmin = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
 
-useEffect(() => {
-  const checkAdmin = async () => {
-    const { data: { session } } = await supabase.auth.getSession();
+      if (!session?.user) {
+        navigate('/login');
+        return;
+      }
 
-    if (!session?.user) {
-      navigate('/login');
-      return;
-    }
+      const { data, error } = await supabase
+        .from('technicians')
+        .select('role')
+        .eq('id', session.user.id)
+        .single();
 
-    const { data } = await supabase
-      .from('technicians')
-      .select('role')
-      .eq('id', session.user.id)
-      .single();
+      if (error || data?.role !== 'admin') {
+        navigate('/');
+        return;
+      }
 
-    if (data?.role !== 'admin') {
-      navigate('/');
-      return;
-    }
+      setChecking(false);
+    };
 
-    setChecking(false);
-  };
+    checkAdmin();
+  }, [navigate]);
 
-  checkAdmin();
-}, []);
-  if (checking) {
-  return <div className="min-h-screen flex items-center justify-center">Loading…</div>;
-}
+  // 📦 FETCH JOBS (ONLY AFTER ADMIN CONFIRMED)
   const fetchJobs = async () => {
     setLoading(true);
 
@@ -59,14 +56,20 @@ useEffect(() => {
       .select('*')
       .order('check_in_time', { ascending: false });
 
-    if (error) {
-      console.error('Error fetching jobs:', error);
-    } else {
+    if (!error) {
       setJobs(data || []);
+    } else {
+      console.error('Error fetching jobs:', error);
     }
 
     setLoading(false);
   };
+
+  useEffect(() => {
+    if (!checking) {
+      fetchJobs();
+    }
+  }, [checking]);
 
   const markAsDone = async (jobId: string) => {
     const { error } = await supabase
@@ -77,20 +80,27 @@ useEffect(() => {
       })
       .eq('id', jobId);
 
-    if (error) {
-      console.error(error);
-      return;
+    if (!error) {
+      fetchJobs();
     }
-
-    fetchJobs();
   };
 
+  // ⏳ AUTH CHECK LOADING
+  if (checking) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        Checking admin access…
+      </div>
+    );
+  }
+
+  // 🧱 DASHBOARD UI
   return (
     <div className="max-w-6xl mx-auto p-6">
       <h1 className="text-2xl font-bold mb-6">Admin Dashboard</h1>
 
       {loading ? (
-        <p>Loading jobs...</p>
+        <p>Loading jobs…</p>
       ) : jobs.length === 0 ? (
         <p>No jobs yet.</p>
       ) : (
@@ -106,13 +116,11 @@ useEffect(() => {
                   {job.device_model} – {job.repair_type}
                 </p>
                 <p className="text-xs text-gray-500">
-                  Check-in:{' '}
-                  {new Date(job.check_in_time).toLocaleString()}
+                  Check-in: {new Date(job.check_in_time).toLocaleString()}
                 </p>
                 {job.check_out_time && (
                   <p className="text-xs text-gray-500">
-                    Check-out:{' '}
-                    {new Date(job.check_out_time).toLocaleString()}
+                    Check-out: {new Date(job.check_out_time).toLocaleString()}
                   </p>
                 )}
               </div>
@@ -144,3 +152,4 @@ useEffect(() => {
     </div>
   );
 }
+
