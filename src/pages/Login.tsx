@@ -13,7 +13,7 @@ export default function Login() {
     const { error } = await supabase.auth.signInWithOtp({
       email,
       options: {
-        emailRedirectTo: window.location.origin + '/admin',
+        emailRedirectTo: 'http://localhost:3000/admin',
       },
     });
 
