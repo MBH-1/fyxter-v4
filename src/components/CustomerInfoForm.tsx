@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { supabase } from '../lib/supabase';
+import { Location } from '../lib/types';
 import { Phone, Mail, User as UserIcon } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -7,11 +8,12 @@ interface CustomerInfoFormProps {
   selectedOption: 'original' | 'aftermarket' | 'onsite' | 'diagnostic';
   deviceModel: string;
   price: number;
+  userLocation: Location | null;
   onSubmit: (info: { name: string; email: string; phone: string }) => void;
   onBack: () => void;
 }
 
-export function CustomerInfoForm({ selectedOption, deviceModel, price, onSubmit, onBack }: CustomerInfoFormProps) {
+export function CustomerInfoForm({ selectedOption, deviceModel, price, userLocation, onSubmit, onBack }: CustomerInfoFormProps) {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -52,6 +54,9 @@ export function CustomerInfoForm({ selectedOption, deviceModel, price, onSubmit,
   device: deviceModel,
   repair_type: selectedOption,
   price,
+  location: userLocation
+    ? { latitude: userLocation.latitude, longitude: userLocation.longitude }
+    : null,
   preferred_date: timing === 'later' ? selectedDate : null,
   preferred_time: timing === 'later' ? selectedTime : null,
 }),
