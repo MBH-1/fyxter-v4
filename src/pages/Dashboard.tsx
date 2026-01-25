@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabase';
 
 type Job = {
@@ -19,7 +20,37 @@ export default function Dashboard() {
   useEffect(() => {
     fetchJobs();
   }, []);
+const navigate = useNavigate();
+const [checking, setChecking] = useState(true);
 
+useEffect(() => {
+  const checkAdmin = async () => {
+    const { data: { session } } = await supabase.auth.getSession();
+
+    if (!session?.user) {
+      navigate('/login');
+      return;
+    }
+
+    const { data } = await supabase
+      .from('technicians')
+      .select('role')
+      .eq('id', session.user.id)
+      .single();
+
+    if (data?.role !== 'admin') {
+      navigate('/');
+      return;
+    }
+
+    setChecking(false);
+  };
+
+  checkAdmin();
+}, []);
+  if (checking) {
+  return <div className="min-h-screen flex items-center justify-center">Loading…</div>;
+}
   const fetchJobs = async () => {
     setLoading(true);
 
