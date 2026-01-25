@@ -33,55 +33,73 @@ export function CustomerInfoForm({ selectedOption, deviceModel, price, userLocat
   const [error, setError] = useState<string | null>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    if (!termsAccepted) {
-      setError('You must agree to the Terms and Conditions to continue');
+  if (!termsAccepted) {
+    setError('You must agree to the Terms and Conditions to continue');
+    return;
+  }
+
+  setLoading(true);
+  setError(null);
+
+  try {
+    // ✅ 1. CREATE JOB (before payment)
+    const { error: jobError } = await supabase
+      .from('jobs')
+      .insert({
+        customer_name: name,
+        customer_email: email,
+        customer_phone: phone,
+        device_model: deviceModel,
+        repair_type: selectedOption,
+        service_type: selectedOption,
+        price: price,
+        status: 'in_progress',
+        technician_id: null, // assigned later by admin
+        payment_status: 'unpaid',
+        notes: null
+      });
+
+    if (jobError) {
+      console.error('Error creating job:', jobError);
+      setError('Could not create the job. Please try again.');
       return;
     }
 
-    setLoading(true);
-    setError(null);
+    // ✅ 2. SEND EMAIL (keep existing logic)
+    await fetch('/.netlify/functions/send-confirmation-email', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        name,
+        email,
+        phone,
+        device: deviceModel,
+        repair_type: selectedOption,
+        price,
+        technician: technicianInfo,
+        location: userLocation
+          ? { latitude: userLocation.latitude, longitude: userLocation.longitude }
+          : null,
+        preferred_date: timing === 'later' ? selectedDate : null,
+        preferred_time: timing === 'later' ? selectedTime : null,
+      }),
+    });
 
-    try {
-      const { error: insertError } = await supabase
-        .from('customer_info')
-        .insert([{ name, email, phone, preferred_date: timing === 'later' ? selectedDate : null, preferred_time: timing === 'later' ? selectedTime : null }]);
+    // ✅ 3. CONTINUE FLOW
+    onSubmit({ name, email, phone });
 
-      if (insertError) {
-        console.error('Error inserting customer info:', insertError);
-      }
+  } catch (err) {
+    console.error('Error processing customer info:', err);
+    setError('There was a problem processing your information. Please try again.');
+  } finally {
+    setLoading(false);
+  }
+};
 
-      await fetch('/.netlify/functions/send-confirmation-email', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-       body: JSON.stringify({
-  name,
-  email,
-  phone,
-  device: deviceModel,
-  repair_type: selectedOption,
-  price,
-  technician: technicianInfo,
-  location: userLocation
-    ? { latitude: userLocation.latitude, longitude: userLocation.longitude }
-    : null,
-  preferred_date: timing === 'later' ? selectedDate : null,
-  preferred_time: timing === 'later' ? selectedTime : null,
-}),
 
-      });
-
-      onSubmit({ name, email, phone });
-    } catch (err) {
-      console.error('Error processing customer info:', err);
-      setError('There was a problem processing your information. Please try again.');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  return (
+        return (
     <div className="max-w-xl mx-auto bg-white rounded-lg shadow-lg p-6">
   <h2 className="text-2xl font-semibold mb-6">Enter Your Information</h2>
 
