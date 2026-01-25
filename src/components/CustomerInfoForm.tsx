@@ -62,6 +62,7 @@ export function CustomerInfoForm({ selectedOption, deviceModel, price, userLocat
   device: deviceModel,
   repair_type: selectedOption,
   price,
+  technician: technicianInfo,
   location: userLocation
     ? { latitude: userLocation.latitude, longitude: userLocation.longitude }
     : null,
