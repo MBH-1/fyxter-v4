@@ -7,27 +7,35 @@ export default function AdminRoute({ children }: { children: JSX.Element }) {
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
-    const checkAdmin = async () => {
-      const { data: { user } } = await supabase.auth.getUser();
+    const run = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      const user = session?.user;
+
       if (!user) {
         setIsAdmin(false);
         setLoading(false);
         return;
       }
 
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from('technicians')
         .select('role')
         .eq('id', user.id)
         .single();
 
-      setIsAdmin(data?.role === 'admin');
+      if (!error && data?.role === 'admin') {
+        setIsAdmin(true);
+      }
+
       setLoading(false);
     };
 
-    checkAdmin();
+    run();
   }, []);
 
-  if (loading) return <div className="p-6">Loading…</div>;
-  return isAdmin ? children : <Navigate to="/login" />;
+  if (loading) {
+    return <div className="min-h-screen flex items-center justify-center">Loading…</div>;
+  }
+
+  return isAdmin ? children : <Navigate to="/login" replace />;
 }
