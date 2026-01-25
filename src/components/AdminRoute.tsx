@@ -7,30 +7,44 @@ export default function AdminRoute({ children }: { children: JSX.Element }) {
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
-    const run = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      const user = session?.user;
+    let mounted = true;
 
-      if (!user) {
-        setIsAdmin(false);
-        setLoading(false);
+    const checkAdmin = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+
+      if (!session?.user) {
+        if (mounted) {
+          setIsAdmin(false);
+          setLoading(false);
+        }
         return;
       }
 
       const { data, error } = await supabase
         .from('technicians')
         .select('role')
-        .eq('id', user.id)
+        .eq('id', session.user.id)
         .single();
 
       if (!error && data?.role === 'admin') {
-        setIsAdmin(true);
+        if (mounted) setIsAdmin(true);
       }
 
-      setLoading(false);
+      if (mounted) setLoading(false);
     };
 
-    run();
+    // 🔑 Run once
+    checkAdmin();
+
+    // 🔑 AND listen for magic-link session restore
+    const { data: listener } = supabase.auth.onAuthStateChange(() => {
+      checkAdmin();
+    });
+
+    return () => {
+      mounted = false;
+      listener.subscription.unsubscribe();
+    };
   }, []);
 
   if (loading) {
