@@ -45,7 +45,17 @@ export function CustomerInfoForm({ selectedOption, deviceModel, price, onSubmit,
       await fetch('/.netlify/functions/send-confirmation-email', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, phone, preferred_date: timing === 'later' ? selectedDate : null, preferred_time: timing === 'later' ? selectedTime : null }),
+       body: JSON.stringify({
+  name,
+  email,
+  phone,
+  device: deviceModel,
+  repair_type: selectedOption,
+  price,
+  preferred_date: timing === 'later' ? selectedDate : null,
+  preferred_time: timing === 'later' ? selectedTime : null,
+}),
+
       });
 
       onSubmit({ name, email, phone });
@@ -59,26 +69,48 @@ export function CustomerInfoForm({ selectedOption, deviceModel, price, onSubmit,
 
   return (
     <div className="max-w-xl mx-auto bg-white rounded-lg shadow-lg p-6">
-      <h2 className="text-2xl font-semibold mb-6">Enter Your Information</h2>
+  <h2 className="text-2xl font-semibold mb-6">Enter Your Information</h2>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
-        {/* Name */}
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
-          <div className="relative">
-            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-              <UserIcon className="h-5 w-5 text-gray-400" />
-            </div>
-            <input
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:ring-black focus:border-black"
-              placeholder="John Doe"
-              required
-            />
-          </div>
+  {/* Repair Summary */}
+  <div className="mb-6 rounded-lg border bg-gray-50 p-4">
+    <h3 className="text-sm font-medium text-gray-700 mb-2">
+      Repair summary
+    </h3>
+
+    <div className="text-sm text-gray-600 space-y-1">
+      <div>
+        <strong>Device:</strong> {deviceModel}
+      </div>
+      <div>
+        <strong>Repair type:</strong> {selectedOption}
+      </div>
+      <div>
+        <strong>Price:</strong> ${price}
+      </div>
+    </div>
+  </div>
+
+  <form onSubmit={handleSubmit} className="space-y-6">
+    {/* Name */}
+    <div>
+      <label className="block text-sm font-medium text-gray-700 mb-1">
+        Full Name
+      </label>
+      <div className="relative">
+        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+          <UserIcon className="h-5 w-5 text-gray-400" />
         </div>
+        <input
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          className="block w-full pl-10 pr-3 py-2 border border-gray-300 rounded-md focus:ring-black focus:border-black"
+          placeholder="John Doe"
+          required
+        />
+      </div>
+    </div>
+
 
         {/* Email */}
         <div>

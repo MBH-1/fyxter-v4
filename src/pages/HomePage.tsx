@@ -521,4 +521,3 @@ const modelSlug = model.value.toLowerCase().replace(/_/g, '-');
     </main>
   );
 }
-
