@@ -204,3 +204,85 @@ export function CustomerInfoForm({ selectedOption, deviceModel, price, userLocat
     </div>
   );
 }
+{/* THE FYXTER GUARANTEE SECTION (REPAIRPAL STYLE) */}
+<section className="py-20 bg-white rounded-[40px] my-12 border border-gray-100 shadow-sm overflow-hidden">
+  <div className="max-w-3xl mx-auto px-6">
+    <div className="text-center mb-16">
+      <h2 className="text-4xl font-black text-gray-900 mb-4 tracking-tight">The Fyxter Guarantee</h2>
+      <p className="text-gray-500 font-medium text-lg max-w-xl mx-auto">
+        Finding a technician you can trust with your data and device is hard. 
+        We’ve done the vetting for you.
+      </p>
+    </div>
+
+    <div className="relative">
+      {/* Central Connecting Line */}
+      <div className="absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-gray-200 to-transparent -translate-x-1/2 hidden md:block" />
+
+      <div className="space-y-16 relative">
+        {/* Step 1: Expert Vetting */}
+        <div className="flex flex-col md:flex-row items-center gap-8 group">
+          <div className="md:w-1/2 md:text-right">
+            <h4 className="text-xl font-black text-gray-900 mb-2">Expert Vetting</h4>
+            <p className="text-gray-500 text-sm leading-relaxed">
+              A comprehensive assessment of technical skills, specialized tools, and repair experience.
+            </p>
+          </div>
+          <div className="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center text-white z-10 shadow-lg shadow-blue-100 group-hover:scale-110 transition-transform">
+            <Check className="w-6 h-6" />
+          </div>
+          <div className="md:w-1/2" />
+        </div>
+
+        {/* Step 2: Verified Track Record */}
+        <div className="flex flex-col md:flex-row-reverse items-center gap-8 group">
+          <div className="md:w-1/2 md:text-left">
+            <h4 className="text-xl font-black text-gray-900 mb-2">Verified Track Record</h4>
+            <p className="text-gray-500 text-sm leading-relaxed">
+              Constant monitoring of customer feedback to ensure a 4.8+ star service standard.
+            </p>
+          </div>
+          <div className="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center text-white z-10 shadow-lg shadow-blue-100 group-hover:scale-110 transition-transform">
+            <Check className="w-6 h-6" />
+          </div>
+          <div className="md:w-1/2" />
+        </div>
+
+        {/* Step 3: Fair Price Protection */}
+        <div className="flex flex-col md:flex-row items-center gap-8 group">
+          <div className="md:w-1/2 md:text-right">
+            <h4 className="text-xl font-black text-gray-900 mb-2">Fair Price Protection</h4>
+            <p className="text-gray-500 text-sm leading-relaxed">
+              We audit local market rates to ensure you always get premium parts at a transparent price.
+            </p>
+          </div>
+          <div className="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center text-white z-10 shadow-lg shadow-blue-100 group-hover:scale-110 transition-transform">
+            <Check className="w-6 h-6" />
+          </div>
+          <div className="md:w-1/2" />
+        </div>
+
+        {/* Step 4: The Fyxter Seal */}
+        <div className="flex flex-col md:flex-row-reverse items-center gap-8 group">
+          <div className="md:w-1/2 md:text-left">
+            <h4 className="text-xl font-black text-gray-900 mb-2">The Fyxter Seal</h4>
+            <p className="text-gray-500 text-sm leading-relaxed">
+              Certification is only granted to elite technicians who pass every background and quality check.
+            </p>
+          </div>
+          <div className="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center text-white z-10 shadow-lg shadow-blue-100 group-hover:scale-110 transition-transform">
+            <Check className="w-6 h-6" />
+          </div>
+          <div className="md:w-1/2" />
+        </div>
+      </div>
+
+      {/* Final Action Button */}
+      <div className="mt-20 flex flex-col items-center">
+        <button className="px-10 py-4 bg-blue-600 text-white rounded-2xl font-black text-sm hover:bg-blue-700 transition-all shadow-xl shadow-blue-100">
+          View All Certified Locations
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
