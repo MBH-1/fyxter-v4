@@ -2,3 +2,5 @@
 /api/create-checkout       /.netlify/functions/create-checkout   200
 /repair/*                  /index.html                     200
 /*                         /index.html                     200
+/blog   https://blog.fyxters.com   301
+/blog/* https://blog.fyxters.com/:splat 301
