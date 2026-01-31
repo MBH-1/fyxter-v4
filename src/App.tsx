@@ -89,7 +89,6 @@ function App() {
       <Route path="/services" element={<Services />} />
       <Route path="/faq" element={<FAQPage />} />
       <Route path="/warranty" element={<WarrantyPolicy />} />
-      <Route path="/blog" element={<BlogPage />} />
       <Route path="/shipping" element={<ShippingPolicy />} />
       <Route path="/test" element={<TestPage />} />
       <Route path="/repair-confirmation" element={<Layout><RepairConfirmation /></Layout>} />
