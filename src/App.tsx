@@ -16,6 +16,7 @@ import { ShippingPolicy } from './pages/ShippingPolicy';
 import { TestPage } from './pages/TestPage';
 import { RepairConfirmation } from './pages/RepairConfirmation';
 import Dashboard from './pages/Dashboard';
+import IphoneScreenRepairMontreal from './pages/IphoneScreenRepairMontreal';
 import AdminRoute from './components/AdminRoute';
 import { supabase } from './lib/supabase';
 import Login from './pages/Login';
