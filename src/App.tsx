@@ -104,6 +104,7 @@ function App() {
       <Route path="/test" element={<TestPage />} />
       <Route path="/login" element={<Login />} />
       <Route path="/repair-confirmation" element={<Layout><RepairConfirmation /></Layout>} />
+      <Route path="/iphone-screen-repair-montreal"element={<Layout><IphoneScreenRepairMontreal /> </Layout>  } />
       <Route path="/dashboard" element={
         <TechnicianRoute>
           <UserDashboard />
