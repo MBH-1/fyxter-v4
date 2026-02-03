@@ -16,6 +16,7 @@ import { ShippingPolicy } from './pages/ShippingPolicy';
 import { TestPage } from './pages/TestPage';
 import { RepairConfirmation } from './pages/RepairConfirmation';
 import { supabase } from './lib/supabase';
+import IphoneScreenRepairMontreal from "./pages/IphoneScreenRepairMontreal";
 
 // Technician-only route component
 // test build trigger
@@ -92,6 +93,7 @@ function App() {
       <Route path="/shipping" element={<ShippingPolicy />} />
       <Route path="/test" element={<TestPage />} />
       <Route path="/repair-confirmation" element={<Layout><RepairConfirmation /></Layout>} />
+       <Route path="/iphone-screen-repair-montreal"element={<Layout><IphoneScreenRepairMontreal /> </Layout>  } />
       <Route path="/dashboard" element={
         <TechnicianRoute>
           <UserDashboard />
