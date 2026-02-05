@@ -42,8 +42,8 @@ export function ShippingPolicy() {
               Our team is available Monday through Saturday to assist with your shipping questions.
             </p>
             <div className="space-y-2 text-gray-700">
-              <p>Phone: (123) 456-7890</p>
-              <p>Email: support@fyxters.com</p>
+              <p>Phone: (514) 865-2788</p>
+              <p>Email: info@fyxters.com</p>
               <p>Hours: Monday - Friday: 9AM - 7PM, Saturday: 10AM - 5PM</p>
             </div>
           </div>
