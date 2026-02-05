@@ -3,6 +3,9 @@
 /blog                     https://blog.fyxters.com              301
 /blog/*                   https://blog.fyxters.com/:splat       301
 
+/dashboard                /                                     301
+/shipping                 /                                     301
+
 /repair/*                 /index.html                           200
 /*                        /index.html                           200
 
