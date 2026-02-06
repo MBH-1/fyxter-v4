@@ -180,6 +180,13 @@ export function HomePage() {
         <title>{pageTitle}</title>
         <meta name="description" content={pageDescription} />
       </Helmet>
+       {/* SEO – invisible, safe */}
+    <h1 className="sr-only">
+      Phone Repair in Montreal – iPhone & Samsung Screen Repair | Fyxters
+    </h1>
+     <h2 className="sr-only">iPhone Screen Repair in Montreal</h2>
+    <h2 className="sr-only">Samsung Screen Repair in Montreal</h2>
+    <h2 className="sr-only">Same-Day Phone Repair in Montreal</h2>
 
       {orderComplete ? (
         <div className="max-w-xl mx-auto bg-white rounded-2xl shadow-xl p-12 text-center">
