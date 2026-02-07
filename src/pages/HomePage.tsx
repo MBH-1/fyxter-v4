@@ -8,6 +8,8 @@ import {
   Battery, Smartphone, Camera, Droplets, Zap, Power, Phone as PhoneIcon,
   CreditCard, Ticket
 } from 'lucide-react';
+// ✅ NEW: Import pricing queries
+import { getPricingOptions, PricingOption } from '../lib/pricingQueries';
 
 // --- SCREEN INFO MODAL ---
 function ScreenInfoModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => void }) {
@@ -44,12 +46,17 @@ function ScreenInfoModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => 
 }
 
 export function HomePage() {
+  // ✅ UPDATED: Changed state structure
   const [devicePrices, setDevicePrices] = useState<DevicePrice[]>([]);
   const [userLocation, setUserLocation] = useState<Location | null>(null);
   const [selectedBrand, setSelectedBrand] = useState<string>('Iphone');
   const [selectedDevice, setSelectedDevice] = useState<DevicePrice | null>(null);
   const [selectedRepairType, setSelectedRepairType] = useState<string | null>(null);
-  const [selectedOption, setSelectedOption] = useState<'original' | 'aftermarket' | 'onsite' | null>(null);
+  
+  // ✅ NEW: Store pricing options from new table
+  const [pricingOptions, setPricingOptions] = useState<PricingOption[]>([]);
+  const [selectedOption, setSelectedOption] = useState<PricingOption | null>(null);
+  
   const [technicianInfo, setTechnicianInfo] = useState<{ distance: string; duration: string; name: string; rating: number } | null>(null);
   const [locationLoading, setLocationLoading] = useState(false);
   const [isInfoModalOpen, setIsInfoModalOpen] = useState(false);
@@ -63,9 +70,44 @@ export function HomePage() {
     initAutocomplete();
   }, []);
 
+  // ✅ KEEP OLD FUNCTION: Still fetch from screen_prices for device list
   const fetchDevicePrices = async () => {
     const { data } = await supabase.from('screen_prices').select('*').order('brand', { ascending: true });
     setDevicePrices(data || []);
+  };
+
+  // ✅ NEW: Fetch pricing when device and repair type are selected
+  useEffect(() => {
+    if (selectedDevice && selectedRepairType) {
+      fetchPricingOptions();
+    }
+  }, [selectedDevice, selectedRepairType]);
+
+  const fetchPricingOptions = async () => {
+    if (!selectedDevice || !selectedRepairType) return;
+
+    // Map repair type ID to database name
+    const repairTypeMap: Record<string, string> = {
+      'screen': 'Broken Screen',
+      'battery': 'Battery Issues',
+      'rear': 'Rear Glass',
+      'camera': 'Camera Problems',
+      'water': 'Water Damage',
+      'power': "Won't Power On"
+    };
+
+    const repairTypeName = repairTypeMap[selectedRepairType];
+    if (!repairTypeName) return;
+
+    const options = await getPricingOptions(selectedDevice.model, repairTypeName);
+    if (options) {
+      setPricingOptions(options);
+      // Auto-select the most popular option
+      const popularOption = options.find(opt => opt.is_most_popular);
+      if (popularOption) {
+        setSelectedOption(popularOption);
+      }
+    }
   };
 
   const initAutocomplete = async () => {
@@ -122,6 +164,26 @@ export function HomePage() {
     { id: 'power', title: "Won't Power On", icon: Power },
   ];
 
+  // ✅ NEW: Get label for display
+  const getOptionLabel = (option: PricingOption) => {
+    if (option.repair_option === 'Aftermarket') return 'Aftermarket Screen';
+    if (option.repair_option === 'Original') return 'Original Screen';
+    if (option.repair_option === 'Home Service') return 'Home Service';
+    if (option.repair_option === 'Diagnostic') return 'Diagnostic Service';
+    if (option.repair_option === 'Front Camera') return 'Front Camera Repair';
+    if (option.repair_option === 'Back Camera') return 'Back Camera Repair';
+    return option.repair_type;
+  };
+
+  // ✅ NEW: Get badge text
+  const getOptionBadge = (option: PricingOption) => {
+    if (option.repair_option === 'Aftermarket') return 'Value Choice';
+    if (option.repair_option === 'Original') return 'Recommended';
+    if (option.repair_option === 'Home Service') return 'VIP Service';
+    if (option.repair_option === 'Diagnostic') return 'Assessment';
+    return 'Standard';
+  };
+
   return (
     <main className="min-h-screen bg-[#f8fafc] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 mb-32">
       <Helmet><title>Fyxters – Fast Device Repair</title></Helmet>
@@ -133,17 +195,19 @@ export function HomePage() {
             <span className="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm">1</span>
             Select Your Device & Problem
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div className="flex flex-col gap-2">
-              {['Iphone', 'Ipad', 'Samsung', 'Google'].map(b => (
-                <button key={b} onClick={() => setSelectedBrand(b)} className={`py-4 px-5 text-left rounded-2xl border-2 font-bold transition-all ${selectedBrand === b ? 'border-blue-600 bg-blue-50 text-blue-600' : 'border-gray-50 bg-gray-50/50'}`}>{b}</button>
+          <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+            {/* Brand selector */}
+            <div className="flex flex-col gap-3">
+              {['Iphone', 'Ipad', 'Samsung', 'Google'].map((brand) => (
+                <button key={brand} onClick={() => { setSelectedBrand(brand); setSelectedDevice(null); setSelectedRepairType(null); }} className={`py-4 px-6 rounded-2xl font-black transition-all ${selectedBrand === brand ? 'bg-blue-600 text-white shadow-lg shadow-blue-200' : 'bg-gray-50 text-gray-600 hover:bg-gray-100'}`}>{brand}</button>
               ))}
             </div>
-            {/* DEVICE MODEL SCROLL BOX */}
-            <div className="md:col-span-3">
-               <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 max-h-[350px] overflow-y-auto pr-2 custom-scrollbar">
-                {devicePrices.filter(d => d.brand === selectedBrand).map(m => (
-                  <button key={m.id} onClick={() => setSelectedDevice(m)} className={`py-5 px-3 text-sm font-bold rounded-2xl border-2 transition-all ${selectedDevice?.id === m.id ? 'border-blue-600 bg-blue-600 text-white shadow-lg' : 'border-gray-50 bg-gray-50 text-gray-600 hover:border-gray-200'}`}>{m.model.replace(/_/g, ' ')}</button>
+
+            {/* Device models scroll box */}
+            <div className="lg:col-span-3">
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
+                {devicePrices.filter(d => d.brand === selectedBrand).map((device) => (
+                  <button key={device.id} onClick={() => { setSelectedDevice(device); setSelectedRepairType(null); setPricingOptions([]); }} className={`p-4 rounded-2xl border-2 transition-all text-sm font-bold ${selectedDevice?.id === device.id ? 'border-blue-600 bg-blue-50 shadow-sm' : 'border-transparent bg-gray-50 hover:border-gray-100'}`}>{device.model}</button>
                 ))}
               </div>
             </div>
@@ -161,25 +225,50 @@ export function HomePage() {
           )}
         </section>
 
-        {/* STEP 2: PRICE CHOICE */}
-        {selectedRepairType && (
+        {/* STEP 2: PRICE CHOICE - ✅ UPDATED TO USE NEW PRICING TABLE */}
+        {selectedRepairType && pricingOptions.length > 0 && (
           <section ref={priceSectionRef} className="animate-in fade-in slide-in-from-bottom-8 duration-500">
             <h2 className="text-xl font-black text-gray-900 mb-8 text-center">Choose Your Repair Quality</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {[
-                { id: 'aftermarket', label: 'Aftermarket Screen', price: selectedDevice?.aftermarket_part, badge: 'Value Choice' },
-                { id: 'original', label: 'Original Screen', price: selectedDevice?.original_part, badge: 'Recommended', popular: true },
-                { id: 'onsite', label: 'Home Service', price: (selectedDevice?.original_part || 0) + 100, badge: 'VIP Service' }
-              ].map((opt) => (
-                <div key={opt.id} onClick={() => { setSelectedOption(opt.id as any); setTimeout(() => locationSectionRef.current?.scrollIntoView({ behavior: 'smooth' }), 100); }} className={`p-8 rounded-3xl border-4 cursor-pointer transition-all bg-white relative ${selectedOption === opt.id ? 'border-blue-600 shadow-xl scale-105 z-10' : 'border-gray-100 hover:border-gray-200 shadow-sm'}`}>
-                  {opt.popular && <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-blue-600 text-white px-4 py-1 rounded-full text-[10px] font-black uppercase shadow-lg">Most Popular</div>}
-                  <h3 className="text-lg font-black text-gray-900 mb-1">{opt.label}</h3>
-                  <div className="text-4xl font-black text-blue-600 mb-6">${opt.price}</div>
+            <div className={`grid grid-cols-1 ${pricingOptions.length === 3 ? 'md:grid-cols-3' : pricingOptions.length === 2 ? 'md:grid-cols-2' : 'md:grid-cols-1'} gap-6`}>
+              {pricingOptions.map((option) => (
+                <div 
+                  key={option.id} 
+                  onClick={() => { 
+                    setSelectedOption(option); 
+                    setTimeout(() => locationSectionRef.current?.scrollIntoView({ behavior: 'smooth' }), 100); 
+                  }} 
+                  className={`p-8 rounded-3xl border-4 cursor-pointer transition-all bg-white relative ${
+                    selectedOption?.id === option.id 
+                      ? 'border-blue-600 shadow-xl scale-105 z-10' 
+                      : 'border-gray-100 hover:border-gray-200 shadow-sm'
+                  }`}
+                >
+                  {option.is_most_popular && (
+                    <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-blue-600 text-white px-4 py-1 rounded-full text-[10px] font-black uppercase shadow-lg">
+                      Most Popular
+                    </div>
+                  )}
+                  <h3 className="text-lg font-black text-gray-900 mb-1">{getOptionLabel(option)}</h3>
+                  <div className="text-4xl font-black text-blue-600 mb-6">${option.price}</div>
                   <ul className="space-y-3 mb-8 text-xs text-gray-500">
-                     <li className="flex items-center gap-2"><Check className="w-4 h-4 text-green-500"/> 6-Month Warranty</li>
-                     <li className="flex items-center gap-2"><Check className="w-4 h-4 text-green-500"/> Expert Technician</li>
+                    <li className="flex items-center gap-2">
+                      <Check className="w-4 h-4 text-green-500"/> {option.warranty_months}-Month Warranty
+                    </li>
+                    {option.includes_expert_technician && (
+                      <li className="flex items-center gap-2">
+                        <Check className="w-4 h-4 text-green-500"/> Expert Technician
+                      </li>
+                    )}
                   </ul>
-                  <button onClick={(e) => { e.stopPropagation(); setIsInfoModalOpen(true); }} className="text-blue-600 text-[11px] font-bold flex items-center gap-1 hover:underline"><Info className="w-3 h-3" /> What's the difference?</button>
+                  {/* Only show info button for screen repairs */}
+                  {selectedRepairType === 'screen' && (
+                    <button 
+                      onClick={(e) => { e.stopPropagation(); setIsInfoModalOpen(true); }} 
+                      className="text-blue-600 text-[11px] font-bold flex items-center gap-1 hover:underline"
+                    >
+                      <Info className="w-3 h-3" /> What's the difference?
+                    </button>
+                  )}
                 </div>
               ))}
             </div>
@@ -259,13 +348,13 @@ export function HomePage() {
         </section>
       </div>
 
-      {/* STICKY FOOTER PRICE BAR */}
+      {/* STICKY FOOTER PRICE BAR - ✅ UPDATED */}
       {selectedDevice && selectedOption && (
         <div className="fixed bottom-0 left-0 right-0 z-[500] p-4 bg-white/95 backdrop-blur-xl border-t border-gray-100 shadow-[0_-15px_35px_rgba(0,0,0,0.1)]">
           <div className="max-w-5xl mx-auto flex items-center justify-between gap-4">
             <div>
               <div className="text-[10px] font-black uppercase text-gray-400 tracking-widest leading-none mb-1">Estimated Total</div>
-              <div className="text-3xl font-black text-gray-900 leading-none">${selectedOption === 'aftermarket' ? selectedDevice.aftermarket_part : selectedDevice.original_part + (selectedOption === 'onsite' ? 100 : 0)}</div>
+              <div className="text-3xl font-black text-gray-900 leading-none">${selectedOption.price}</div>
             </div>
             <button className="bg-blue-600 text-white px-12 py-5 rounded-2xl font-black text-lg hover:bg-blue-700 transition-all shadow-xl shadow-blue-100 active:scale-95">Complete Booking</button>
           </div>
