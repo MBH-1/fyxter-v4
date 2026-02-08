@@ -102,6 +102,15 @@ export function HomePage() {
     const options = await getPricingOptions(selectedDevice.model, repairTypeName);
     if (options) {
       setPricingOptions(options);
+      const cleanModelName = selectedDevice.model.replace(/_/g, ' ');
+
+console.log('Fetching pricing for:', cleanModelName, repairTypeName);
+const options = await getPricingOptions(cleanModelName, repairTypeName);
+console.log('Pricing options received:', options);
+
+if (options && options.length > 0) {
+  setPricingOptions(options);
+      
       // Auto-select the most popular option
       const popularOption = options.find(opt => opt.is_most_popular);
       if (popularOption) {
