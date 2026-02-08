@@ -116,6 +116,7 @@ if (options && options.length > 0) {
 } else {
   console.error('No pricing options found for:', cleanModelName, repairTypeName);
 }
+    };
       
       // Auto-select the most popular option
       const popularOption = options.find(opt => opt.is_most_popular);
