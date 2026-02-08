@@ -46,7 +46,6 @@ function ScreenInfoModal({ isOpen, onClose }: { isOpen: boolean; onClose: () => 
 }
 
 export function HomePage() {
-  // ✅ UPDATED: Changed state structure
   const [devicePrices, setDevicePrices] = useState<DevicePrice[]>([]);
   const [userLocation, setUserLocation] = useState<Location | null>(null);
   const [selectedBrand, setSelectedBrand] = useState<string>('Iphone');
@@ -70,7 +69,6 @@ export function HomePage() {
     initAutocomplete();
   }, []);
 
-  // ✅ KEEP OLD FUNCTION: Still fetch from screen_prices for device list
   const fetchDevicePrices = async () => {
     const { data } = await supabase.from('screen_prices').select('*').order('brand', { ascending: true });
     setDevicePrices(data || []);
@@ -86,43 +84,32 @@ export function HomePage() {
   const fetchPricingOptions = async () => {
     if (!selectedDevice || !selectedRepairType) return;
 
-  // Map repair type ID to database name
-const repairTypeMap: Record<string, string> = {
-  'screen': 'Broken Screen',
-  'battery': 'Battery Issues',
-  'rear': 'Rear Glass',
-  'camera': 'Camera Problems',
-  'water': 'Water Damage',
-  'power': "Won't Power On"
-};
-
-const repairTypeName = repairTypeMap[selectedRepairType];
-if (!repairTypeName) return;
-
-// ✅ FIX: Remove underscores from model name
-const cleanModelName = selectedDevice.model.replace(/_/g, ' ');
-
-console.log('Fetching pricing for:', cleanModelName, repairTypeName);
-const options = await getPricingOptions(cleanModelName, repairTypeName);
-console.log('Pricing options received:', options);
-
-if (options && options.length > 0) {
-  setPricingOptions(options);
-  // Auto-select the most popular option
-  const popularOption = options.find(opt => opt.is_most_popular);
-  if (popularOption) {
-    setSelectedOption(popularOption);
-  }
-} else {
-  console.error('No pricing options found for:', cleanModelName, repairTypeName);
-}
+    const repairTypeMap: Record<string, string> = {
+      'screen': 'Broken Screen',
+      'battery': 'Battery Issues',
+      'rear': 'Rear Glass',
+      'camera': 'Camera Problems',
+      'water': 'Water Damage',
+      'power': "Won't Power On"
     };
-      
-      // Auto-select the most popular option
+
+    const repairTypeName = repairTypeMap[selectedRepairType];
+    if (!repairTypeName) return;
+
+    const cleanModelName = selectedDevice.model.replace(/_/g, ' ');
+    
+    console.log('Fetching pricing for:', cleanModelName, repairTypeName);
+    const options = await getPricingOptions(cleanModelName, repairTypeName);
+    console.log('Pricing options received:', options);
+    
+    if (options && options.length > 0) {
+      setPricingOptions(options);
       const popularOption = options.find(opt => opt.is_most_popular);
       if (popularOption) {
         setSelectedOption(popularOption);
       }
+    } else {
+      console.error('No pricing options found for:', cleanModelName, repairTypeName);
     }
   };
 
@@ -171,16 +158,7 @@ if (options && options.length > 0) {
     if (tech) setTechnicianInfo({ ...tech, duration: '6 mins' });
   };
 
-  const repairTypes = [
-    { id: 'screen', title: 'Broken Screen', icon: Monitor },
-    { id: 'battery', title: 'Battery Issues', icon: Battery },
-    { id: 'rear', title: 'Rear Glass', icon: Smartphone },
-    { id: 'camera', title: 'Camera Problems', icon: Camera },
-    { id: 'water', title: 'Water Damage', icon: Droplets },
-    { id: 'power', title: "Won't Power On", icon: Power },
-  ];
-
-  // ✅ NEW: Get label for display
+  // ✅ NEW: Helper functions for displaying options
   const getOptionLabel = (option: PricingOption) => {
     if (option.repair_option === 'Aftermarket') return 'Aftermarket Screen';
     if (option.repair_option === 'Original') return 'Original Screen';
@@ -191,7 +169,6 @@ if (options && options.length > 0) {
     return option.repair_type;
   };
 
-  // ✅ NEW: Get badge text
   const getOptionBadge = (option: PricingOption) => {
     if (option.repair_option === 'Aftermarket') return 'Value Choice';
     if (option.repair_option === 'Original') return 'Recommended';
@@ -200,12 +177,21 @@ if (options && options.length > 0) {
     return 'Standard';
   };
 
+  const repairTypes = [
+    { id: 'screen', title: 'Broken Screen', icon: Monitor },
+    { id: 'battery', title: 'Battery Issues', icon: Battery },
+    { id: 'rear', title: 'Rear Glass', icon: Smartphone },
+    { id: 'camera', title: 'Camera Problems', icon: Camera },
+    { id: 'water', title: 'Water Damage', icon: Droplets },
+    { id: 'power', title: "Won't Power On", icon: Power },
+  ];
+
   return (
     <main className="min-h-screen bg-[#f8fafc] max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 mb-32">
       <Helmet><title>Fyxters – Fast Device Repair</title></Helmet>
 
       <div className="space-y-12">
-        {/* STEP 1: DEVICE SELECTION (WITH SCROLL BOX) */}
+        {/* STEP 1: DEVICE SELECTION */}
         <section className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
           <h2 className="text-xl font-black text-gray-900 mb-8 flex items-center gap-2">
             <span className="w-8 h-8 bg-blue-600 text-white rounded-full flex items-center justify-center text-sm">1</span>
@@ -215,7 +201,22 @@ if (options && options.length > 0) {
             {/* Brand selector */}
             <div className="flex flex-col gap-3">
               {['Iphone', 'Ipad', 'Samsung', 'Google'].map((brand) => (
-                <button key={brand} onClick={() => { setSelectedBrand(brand); setSelectedDevice(null); setSelectedRepairType(null); }} className={`py-4 px-6 rounded-2xl font-black transition-all ${selectedBrand === brand ? 'bg-blue-600 text-white shadow-lg shadow-blue-200' : 'bg-gray-50 text-gray-600 hover:bg-gray-100'}`}>{brand}</button>
+                <button 
+                  key={brand} 
+                  onClick={() => { 
+                    setSelectedBrand(brand); 
+                    setSelectedDevice(null); 
+                    setSelectedRepairType(null); 
+                    setPricingOptions([]);
+                  }} 
+                  className={`py-4 px-6 rounded-2xl font-black transition-all ${
+                    selectedBrand === brand 
+                      ? 'bg-blue-600 text-white shadow-lg shadow-blue-200' 
+                      : 'bg-gray-50 text-gray-600 hover:bg-gray-100'
+                  }`}
+                >
+                  {brand}
+                </button>
               ))}
             </div>
 
@@ -223,7 +224,21 @@ if (options && options.length > 0) {
             <div className="lg:col-span-3">
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
                 {devicePrices.filter(d => d.brand === selectedBrand).map((device) => (
-                  <button key={device.id} onClick={() => { setSelectedDevice(device); setSelectedRepairType(null); setPricingOptions([]); }} className={`p-4 rounded-2xl border-2 transition-all text-sm font-bold ${selectedDevice?.id === device.id ? 'border-blue-600 bg-blue-50 shadow-sm' : 'border-transparent bg-gray-50 hover:border-gray-100'}`}>{device.model}</button>
+                  <button 
+                    key={device.id} 
+                    onClick={() => { 
+                      setSelectedDevice(device); 
+                      setSelectedRepairType(null); 
+                      setPricingOptions([]); 
+                    }} 
+                    className={`p-4 rounded-2xl border-2 transition-all text-sm font-bold ${
+                      selectedDevice?.id === device.id 
+                        ? 'border-blue-600 bg-blue-50 shadow-sm' 
+                        : 'border-transparent bg-gray-50 hover:border-gray-100'
+                    }`}
+                  >
+                    {device.model.replace(/_/g, ' ')}
+                  </button>
                 ))}
               </div>
             </div>
@@ -232,7 +247,18 @@ if (options && options.length > 0) {
           {selectedDevice && (
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 mt-8 pt-8 border-t border-gray-100 animate-in fade-in">
               {repairTypes.map((repair) => (
-                <button key={repair.id} onClick={() => { setSelectedRepairType(repair.id); setTimeout(() => priceSectionRef.current?.scrollIntoView({ behavior: 'smooth' }), 100); }} className={`p-4 rounded-2xl border-2 transition-all flex flex-col items-center gap-2 text-center ${selectedRepairType === repair.id ? 'border-blue-600 bg-blue-50 shadow-sm' : 'border-transparent bg-gray-50 hover:border-gray-100'}`}>
+                <button 
+                  key={repair.id} 
+                  onClick={() => { 
+                    setSelectedRepairType(repair.id); 
+                    setTimeout(() => priceSectionRef.current?.scrollIntoView({ behavior: 'smooth' }), 100); 
+                  }} 
+                  className={`p-4 rounded-2xl border-2 transition-all flex flex-col items-center gap-2 text-center ${
+                    selectedRepairType === repair.id 
+                      ? 'border-blue-600 bg-blue-50 shadow-sm' 
+                      : 'border-transparent bg-gray-50 hover:border-gray-100'
+                  }`}
+                >
                   <repair.icon className={`w-5 h-5 ${selectedRepairType === repair.id ? 'text-blue-600' : 'text-gray-400'}`} />
                   <span className="font-bold text-[11px] text-gray-800">{repair.title}</span>
                 </button>
@@ -241,7 +267,7 @@ if (options && options.length > 0) {
           )}
         </section>
 
-        {/* STEP 2: PRICE CHOICE - ✅ UPDATED TO USE NEW PRICING TABLE */}
+        {/* STEP 2: PRICE CHOICE */}
         {selectedRepairType && pricingOptions.length > 0 && (
           <section ref={priceSectionRef} className="animate-in fade-in slide-in-from-bottom-8 duration-500">
             <h2 className="text-xl font-black text-gray-900 mb-8 text-center">Choose Your Repair Quality</h2>
@@ -276,7 +302,6 @@ if (options && options.length > 0) {
                       </li>
                     )}
                   </ul>
-                  {/* Only show info button for screen repairs */}
                   {selectedRepairType === 'screen' && (
                     <button 
                       onClick={(e) => { e.stopPropagation(); setIsInfoModalOpen(true); }} 
@@ -305,13 +330,11 @@ if (options && options.length > 0) {
                     <SearchIcon className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
                     <input ref={searchInputRef} type="text" placeholder="Enter street address..." className="w-full pl-12 pr-4 py-5 bg-gray-50 border-none rounded-2xl focus:ring-2 focus:ring-blue-500 outline-none font-bold" />
                   </div>
-                  {/* LOCATION ACTIVATION BUTTON */}
                   <button onClick={handleGetLocation} disabled={locationLoading} className="px-6 bg-blue-50 text-blue-600 rounded-2xl hover:bg-blue-100 transition-colors">
                     <MapPin className={locationLoading ? "animate-pulse" : ""} />
                   </button>
                 </div>
 
-                {/* TECHNICIAN CARD */}
                 {technicianInfo && (
                   <div className="flex items-center justify-between p-5 bg-blue-50/50 rounded-2xl border border-blue-100 animate-in slide-in-from-left-4">
                     <div className="flex items-center gap-4">
@@ -336,7 +359,7 @@ if (options && options.length > 0) {
           </section>
         )}
 
-        {/* WHY TRUST FYXTERS (IMAGE 3 DESIGN) */}
+        {/* WHY TRUST FYXTERS */}
         <section className="bg-gradient-to-br from-[#0f172a] to-[#1e293b] rounded-[40px] p-10 text-white shadow-2xl relative overflow-hidden">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div className="relative z-10">
@@ -364,7 +387,7 @@ if (options && options.length > 0) {
         </section>
       </div>
 
-      {/* STICKY FOOTER PRICE BAR - ✅ UPDATED */}
+      {/* STICKY FOOTER PRICE BAR */}
       {selectedDevice && selectedOption && (
         <div className="fixed bottom-0 left-0 right-0 z-[500] p-4 bg-white/95 backdrop-blur-xl border-t border-gray-100 shadow-[0_-15px_35px_rgba(0,0,0,0.1)]">
           <div className="max-w-5xl mx-auto flex items-center justify-between gap-4">
