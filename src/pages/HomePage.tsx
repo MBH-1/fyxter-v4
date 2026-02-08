@@ -86,23 +86,21 @@ export function HomePage() {
   const fetchPricingOptions = async () => {
     if (!selectedDevice || !selectedRepairType) return;
 
-    // Map repair type ID to database name
-    const repairTypeMap: Record<string, string> = {
-      'screen': 'Broken Screen',
-      'battery': 'Battery Issues',
-      'rear': 'Rear Glass',
-      'camera': 'Camera Problems',
-      'water': 'Water Damage',
-      'power': "Won't Power On"
-    };
+  // Map repair type ID to database name
+const repairTypeMap: Record<string, string> = {
+  'screen': 'Broken Screen',
+  'battery': 'Battery Issues',
+  'rear': 'Rear Glass',
+  'camera': 'Camera Problems',
+  'water': 'Water Damage',
+  'power': "Won't Power On"
+};
 
-    const repairTypeName = repairTypeMap[selectedRepairType];
-    if (!repairTypeName) return;
+const repairTypeName = repairTypeMap[selectedRepairType];
+if (!repairTypeName) return;
 
-    const options = await getPricingOptions(selectedDevice.model, repairTypeName);
-    if (options) {
-      setPricingOptions(options);
-      const cleanModelName = selectedDevice.model.replace(/_/g, ' ');
+// ✅ FIX: Remove underscores from model name
+const cleanModelName = selectedDevice.model.replace(/_/g, ' ');
 
 console.log('Fetching pricing for:', cleanModelName, repairTypeName);
 const options = await getPricingOptions(cleanModelName, repairTypeName);
@@ -110,6 +108,14 @@ console.log('Pricing options received:', options);
 
 if (options && options.length > 0) {
   setPricingOptions(options);
+  // Auto-select the most popular option
+  const popularOption = options.find(opt => opt.is_most_popular);
+  if (popularOption) {
+    setSelectedOption(popularOption);
+  }
+} else {
+  console.error('No pricing options found for:', cleanModelName, repairTypeName);
+}
       
       // Auto-select the most popular option
       const popularOption = options.find(opt => opt.is_most_popular);
